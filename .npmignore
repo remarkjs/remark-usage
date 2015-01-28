@@ -1,0 +1,8 @@
+.*
+*.log
+*.sh
+coverage/
+node_modules/
+test/
+example.js
+History.md

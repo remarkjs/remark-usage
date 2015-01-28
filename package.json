@@ -1,0 +1,53 @@
+{
+  "name": "mdast-usage",
+  "version": "0.1.0",
+  "description": "Add a usage example to your Readme",
+  "license": "MIT",
+  "keywords": [
+    "text",
+    "markdown",
+    "plain",
+    "text"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/mdast-usage.git"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com>",
+  "bin": {
+    "mdast-usage": "cli.js"
+  },
+  "dependencies": {
+    "win-fork": "^1.0.0",
+    "mdast": "^0.1.0"
+  },
+  "peerDependencies": {
+    "mdast": ">=0.1.0"
+  },
+  "devDependencies": {
+    "chalk": "^0.5.1",
+    "diff": "^1.2.2",
+    "eslint": "^0.13.0",
+    "istanbul": "^0.3.0",
+    "jscs": "^1.0.0",
+    "jscs-jsdoc": "^0.4.0",
+    "mocha": "^2.0.0"
+  },
+  "scripts": {
+    "test-api": "_mocha --check-leaks test/index.js",
+    "test-cli": "bash test/cli.sh",
+    "test-coveralls": "istanbul cover _mocha --report lcovonly -- --check-leaks test/index.js",
+    "test-coverage": "istanbul cover _mocha -- test/index.js",
+    "test-travis": "npm run test-coveralls && npm run test-cli",
+    "test": "npm run test-api && npm run test-cli",
+    "lint-api": "eslint index.js",
+    "lint-cli": "eslint cli.js",
+    "lint-test": "eslint --env mocha test/index.js",
+    "lint-style": "jscs --reporter inline index.js cli.js test/index.js",
+    "lint": "npm run lint-api && npm run lint-test && npm run lint-style",
+    "make": "npm run lint && npm run test-coverage",
+    "build-example": "./cli.js Readme.md -o Readme.md",
+    "build": "npm run build-example",
+    "prepublish": "npm run build"
+  }
+}
