@@ -64,7 +64,7 @@ console.log(this);
 
 ## API
 
-### [mdast](https://github.com/wooorm/mdast#api).[use](https://github.com/wooorm/mdast#mdastuseplugin)(mdastUsage)
+### [mdast](https://github.com/wooorm/mdast#api).[use](https://github.com/wooorm/mdast#mdastuseplugin-options)(usage, options)
 
 Adds `example.js` to the `Usage` section in a `Readme.md`.
 
@@ -75,10 +75,10 @@ The example is run as JavaScript. Line comments are parsed as Markdown. Calls to
 It’s easiest to check out and compare [`example.js`](example.js) with the above [Usage](#usage) section.
 
 *   Operate this from an npm package, or provide a `cwd`;
-*   Make sure no side effect occur when running `example.js`!
+*   Make sure no side effects occur when running `example.js`!
 *   Don’t do crazy things. This is mostly regexes!
 
-You can provide options to [`mdast.parse()`](https://github.com/wooorm/mdast#mdastparsevalue-options):
+You can provide options to [`mdast.use()`](https://github.com/wooorm/mdast#mdastuseplugin-options):
 
 Options:
 
