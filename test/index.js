@@ -4,31 +4,20 @@
  * Dependencies.
  */
 
-var usage,
-    mdast,
-    path,
-    fs,
-    diff,
-    chalk,
-    assert;
-
-usage = require('../index.js');
-mdast = require('mdast');
-path = require('path');
-fs = require('fs');
-diff = require('diff');
-chalk = require('chalk');
-assert = require('assert');
+var usage = require('../index.js');
+var mdast = require('mdast');
+var path = require('path');
+var fs = require('fs');
+var diff = require('diff');
+var chalk = require('chalk');
+var assert = require('assert');
 
 /*
  * Methods.
  */
 
-var read,
-    exists;
-
-read = fs.readFileSync;
-exists = fs.existsSync;
+var read = fs.readFileSync;
+var exists = fs.existsSync;
 
 /*
  * Tests.
@@ -50,9 +39,7 @@ describe('mdast-usage()', function () {
  * Constants..
  */
 
-var ROOT;
-
-ROOT = path.join(__dirname, 'fixtures');
+var ROOT = path.join(__dirname, 'fixtures');
 
 /**
  * Describe a fixtures.
@@ -61,18 +48,13 @@ ROOT = path.join(__dirname, 'fixtures');
  */
 function describeFixture(fixture) {
     it('should work on `' + fixture + '`', function () {
-        var filepath,
-            config,
-            output,
-            input,
-            result,
-            fail,
-            difference;
-
-        filepath = ROOT + '/' + fixture;
-
-        config = filepath + '/config.json';
-        output = filepath + '/Output.md';
+        var filepath = ROOT + '/' + fixture;
+        var config = filepath + '/config.json';
+        var output = filepath + '/Output.md';
+        var input;
+        var result;
+        var fail;
+        var difference;
 
         config = exists(config) ? require(config) : {};
         output = exists(output) ? read(output, 'utf-8') : '';
@@ -96,9 +78,7 @@ function describeFixture(fixture) {
                 difference = diff.diffLines(output, result);
 
                 difference.forEach(function (change) {
-                    var colour;
-
-                    colour = change.added ?
+                    var colour = change.added ?
                         'green' : change.removed ? 'red' : 'dim';
 
                     process.stderr.write(chalk[colour](change.value));
@@ -114,9 +94,7 @@ function describeFixture(fixture) {
  * Gather fixtures.
  */
 
-var fixtures;
-
-fixtures = fs.readdirSync(ROOT);
+var fixtures = fs.readdirSync(ROOT);
 
 fixtures = fixtures.filter(function (filepath) {
     return filepath.indexOf('.') !== 0;

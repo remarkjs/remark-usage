@@ -4,37 +4,25 @@
  * Dependencies.
  */
 
-var fs,
-    path,
-    mdast;
-
-fs = require('fs');
-path = require('path');
-mdast = require('mdast');
+var fs = require('fs');
+var path = require('path');
+var mdast = require('mdast');
 
 /*
  * Methods.
  */
 
-var exists,
-    read,
-    write,
-    remove,
-    resolve;
-
-exists = fs.existsSync;
-read = fs.readFileSync;
-write = fs.writeFileSync;
-remove = fs.unlinkSync;
-resolve = path.resolve;
+var exists = fs.existsSync;
+var read = fs.readFileSync;
+var write = fs.writeFileSync;
+var remove = fs.unlinkSync;
+var resolve = path.resolve;
 
 /*
  * List of locations to look for an example.
  */
 
-var EXAMPLES;
-
-EXAMPLES = [
+var EXAMPLES = [
     'docs/example.js',
     'doc/example.js',
     'examples',
@@ -46,13 +34,9 @@ EXAMPLES = [
  * Expressions.
  */
 
-var EXPRESSION_LOG,
-    EXPRESSION_REQUIRE,
-    EXPRESSION_COMMENT;
-
-EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g;
-EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g;
-EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
+var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g;
+var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g;
+var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
 
 /**
  * Intercept calls to `name` on `object`.
@@ -63,9 +47,7 @@ EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
  * @return {Function} A method to stop intercepting.
  */
 function intercept(object, name, callback) {
-    var original;
-
-    original = object[name];
+    var original = object[name];
 
     object[name] = callback;
 
@@ -147,16 +129,12 @@ function isClosingHeading(node, depth) {
  * @return {number?}
  */
 function search(root) {
-    var index,
-        length,
-        depth,
-        child,
-        headingIndex,
-        closingIndex;
-
-    index = -1;
-    length = root.children.length;
-    depth = null;
+    var index = -1;
+    var length = root.children.length;
+    var depth = null;
+    var child;
+    var headingIndex;
+    var closingIndex;
 
     while (++index < length) {
         child = root.children[index];
@@ -192,9 +170,7 @@ function search(root) {
  * @return {string}
  */
 function preprocess(value) {
-    var index;
-
-    index = 0;
+    var index = 0;
 
     value = value.replace(EXPRESSION_LOG, function ($0, $1, $2, $3) {
         index++;
@@ -227,10 +203,8 @@ function script(source, options) {
      */
 
     source = source.replace(EXPRESSION_REQUIRE, function ($0, $1, $2, $3) {
-        var filepath,
-            quote;
-
-        filepath = resolve(options.example, '../', unquote($2));
+        var filepath = resolve(options.example, '../', unquote($2));
+        var quote;
 
         if (options.main === filepath && options.name) {
             /*
@@ -252,9 +226,7 @@ function script(source, options) {
     tokens = [];
 
     source.split('\n').forEach(function (line) {
-        var match;
-
-        match = line.match(EXPRESSION_COMMENT);
+        var match = line.match(EXPRESSION_COMMENT);
 
         tokens.push({
             'type': match ? 'markdown' : 'javascript',
@@ -287,19 +259,16 @@ function log(info) {
  * @return {Array.<Node>}
  */
 function postprocess(value, logs, options) {
-    var tokens,
-        match,
-        content,
-        info,
-        parameters,
-        start,
-        end,
-        markdown;
-
-    tokens = [];
+    var tokens = [];
+    var start = 0;
+    var match;
+    var content;
+    var info;
+    var parameters;
+    var end;
+    var markdown;
 
     EXPRESSION_LOG.lastIndex = 0;
-    start = 0;
 
     /* eslint-disable no-cond-assign */
     while (match = EXPRESSION_LOG.exec(value)) {
@@ -334,8 +303,8 @@ function postprocess(value, logs, options) {
     markdown = [];
 
     tokens.forEach(function (token) {
-        var prev,
-            lang;
+        var prev;
+        var lang;
 
         if (token.type === 'markdown') {
             markdown = markdown.concat(mdast.parse(token.value).children);
@@ -382,16 +351,12 @@ function transformerFactory(options) {
      * @param {Node} node
      */
     return function (node) {
-        var index,
-            example,
-            source,
-            tmp,
-            stop,
-            logs;
-
-        logs = {};
-
-        index = search(node);
+        var logs = {};
+        var index = search(node);
+        var example;
+        var source;
+        var tmp;
+        var stop;
 
         if (index === null) {
             return;
@@ -471,14 +436,12 @@ function transformerFactory(options) {
  * @return {function(Node)}
  */
 function attacher(_, options) {
-    var settings,
-        pack,
-        main,
-        example,
-        name,
-        cwd;
-
-    settings = {};
+    var settings = {};
+    var pack;
+    var main;
+    var example;
+    var name;
+    var cwd;
 
     if (options === null || options === undefined) {
         options = {};
