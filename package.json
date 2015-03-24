@@ -14,11 +14,7 @@
     "url": "https://github.com/wooorm/mdast-usage.git"
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
-  "bin": {
-    "mdast-usage": "cli.js"
-  },
   "dependencies": {
-    "win-fork": "^1.0.0",
     "mdast": "^0.1.0"
   },
   "peerDependencies": {
@@ -35,18 +31,16 @@
   },
   "scripts": {
     "test-api": "_mocha --check-leaks test/index.js",
-    "test-cli": "bash test/cli.sh",
     "test-coveralls": "istanbul cover _mocha --report lcovonly -- --check-leaks test/index.js",
     "test-coverage": "istanbul cover _mocha -- test/index.js",
-    "test-travis": "npm run test-coveralls && npm run test-cli",
-    "test": "npm run test-api && npm run test-cli",
+    "test-travis": "npm run test-coveralls",
+    "test": "npm run test-api",
     "lint-api": "eslint index.js",
-    "lint-cli": "eslint cli.js",
     "lint-test": "eslint --env mocha test/index.js",
-    "lint-style": "jscs --reporter inline index.js cli.js test/index.js",
+    "lint-style": "jscs --reporter inline index.js test/index.js",
     "lint": "npm run lint-api && npm run lint-test && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
-    "build-example": "./cli.js Readme.md -o Readme.md",
+    "build-example": "mdast --use ./ Readme.md -o",
     "build": "npm run build-example",
     "prepublish": "npm run build"
   }

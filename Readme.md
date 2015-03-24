@@ -87,48 +87,6 @@ Options:
 - `main` (string?) — Path to the main script. Resolved from `package.json`s `main` property (or `index.js`). Used to rewrite `require('./index.js')` to `require('some-name')`.
 - `example` (string?) — Path to the example script. **mdast-usage** checks for `docs/example.js`, `doc/example.js`, `examples/index.js`, `example/index.js`, and `example.js`.
 
-## CLI
-
-Install:
-
-```bash
-$ npm install --global mdast-usage
-```
-
-Use:
-
-```text
-Usage: mdast-usage [options] [mdast options]
-
-Add a usage example to your Readme
-
-Options:
-
-  -h, --help            output usage information
-  -v, --version         output version number
-
-A wrapper around `mdast --use mdast-usage`
-
-Help for mdast:
-
-  https://github.com/wooorm/mdast
-
-Usage:
-
-# Pass `Readme.md` through mdast-usage
-$ mdast-usage Readme.md -o Readme.md
-
-# Pass `Readme.md` through mdast-usage, with a custom name
-$ mdast-usage Readme.md -o Readme.md --option name:42
-
-# Pass stdin through mdast-usage, with mdast options, and write to stdout
-$ cat Readme.md | mdast-usage --option setext > Readme-new.md
-
-# Use other plugins
-$ npm install some-plugin
-$ cat Readme.md | mdast-usage --use some-plugin
-```
-
 ## License
 
 [MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
