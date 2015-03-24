@@ -369,100 +369,108 @@ function postprocess(value, logs, options) {
 }
 
 /**
- * Adds an example section based on a valid example
- * JavaScript document to a `Usage` section.
+ * Construct a transformer based on `options`.
  *
- * @param {Node} node
+ * @param {Object} options
+ * @return {function(node)}
  */
-function plugin(node, options) {
-    var index,
-        example,
-        source,
-        tmp,
-        stop,
-        logs;
+function transformerFactory(options) {
+    /**
+     * Adds an example section based on a valid example
+     * JavaScript document to a `Usage` section.
+     *
+     * @param {Node} node
+     */
+    return function (node) {
+        var index,
+            example,
+            source,
+            tmp,
+            stop,
+            logs;
 
-    logs = {};
+        logs = {};
 
-    index = search(node);
+        index = search(node);
 
-    if (index === null) {
-        return;
-    }
+        if (index === null) {
+            return;
+        }
 
-    example = options.example;
+        example = options.example;
 
-    if (!exists(example)) {
-        throw new Error(
-            'Missing example: `' + example + '`. ' +
-            'Pass an `example` or use a file at: ' +
-            EXAMPLES.join(', ')
+        if (!exists(example)) {
+            throw new Error(
+                'Missing example: `' + example + '`. ' +
+                'Pass an `example` or use a file at: ' +
+                EXAMPLES.join(', ')
+            );
+        }
+
+        tmp = example + '-tmp';
+
+        source = preprocess(read(example, 'utf-8'));
+
+        write(tmp, source, 'utf-8');
+
+        /*
+         * TODO: better tmp file management.
+         */
+
+        stop = intercept(console, 'log', function (id, lang, value) {
+            if (!value) {
+                value = lang;
+                lang = null;
+            }
+
+            if (typeof value === 'string' && typeof id === 'string') {
+                logs[id] = {
+                    'id': id,
+                    'lang': lang,
+                    'value': value
+                };
+            }
+        });
+
+        try {
+            require(tmp);
+        } catch (exception) {
+            exception.message =
+                'Invalid example `' + example + '`. ' +
+                'Ensure example is a valid JavaScript file:\n\n' +
+                exception.message;
+
+            throw exception;
+        } finally {
+            stop();
+
+            /* istanbul ignore next */
+            if (exists(tmp)) {
+                remove(tmp);
+            }
+        }
+
+        /*
+         * Add markdown.
+         */
+
+        node.children = [].concat(
+            node.children.slice(0, index),
+            postprocess(source, logs, options),
+            node.children.slice(index)
         );
-    }
-
-    tmp = example + '-tmp';
-
-    source = preprocess(read(example, 'utf-8'));
-
-    write(tmp, source, 'utf-8');
-
-    /*
-     * TODO: better tmp file management.
-     */
-
-    stop = intercept(console, 'log', function (id, lang, value) {
-        if (!value) {
-            value = lang;
-            lang = null;
-        }
-
-        if (typeof value === 'string' && typeof id === 'string') {
-            logs[id] = {
-                'id': id,
-                'lang': lang,
-                'value': value
-            };
-        }
-    });
-
-    try {
-        require(tmp);
-    } catch (exception) {
-        exception.message =
-            'Invalid example `' + example + '`. ' +
-            'Ensure example is a valid JavaScript file:\n\n' +
-            exception.message;
-
-        throw exception;
-    } finally {
-        stop();
-
-        /* istanbul ignore next */
-        if (exists(tmp)) {
-            remove(tmp);
-        }
-    }
-
-    /*
-     * Add markdown.
-     */
-
-    node.children = [].concat(
-        node.children.slice(0, index),
-        postprocess(source, logs, options),
-        node.children.slice(index)
-    );
+    };
 }
 
 /**
  * Adds an npm version badge to the main heading,
  * when available.
  *
- * @param {Node} root
+ * @param {MDAST} _
  * @param {Object?} options
- * @return {function(node)|null}
+ * @return {function(Node)}
  */
-function wrapper(root, options) {
+function attacher(_, options) {
     var settings,
         pack,
         main,
@@ -522,11 +530,11 @@ function wrapper(root, options) {
     settings.main = main;
     settings.example = example;
 
-    return plugin(root, settings);
+    return transformerFactory(settings);
 }
 
 /*
- * Expose `plugin`.
+ * Expose `attacher`.
  */
 
-module.exports = wrapper;
+module.exports = attacher;

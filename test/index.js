@@ -39,9 +39,9 @@ describe('mdast-usage()', function () {
         assert(typeof usage === 'function');
     });
 
-    it('should throw if not passed a node', function () {
-        assert.throws(function () {
-            usage(true);
+    it('should not throw if not passed options', function () {
+        assert.doesNotThrow(function () {
+            usage(mdast);
         });
     });
 });
@@ -84,7 +84,7 @@ function describeFixture(fixture) {
         fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : '';
 
         try {
-            result = mdast.stringify(mdast.use(usage).parse(input, config));
+            result = mdast.stringify(mdast.use(usage, config).parse(input));
 
             assert(result === output);
         } catch (exception) {

@@ -15,10 +15,10 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
-    "mdast": "^0.1.0"
+    "mdast": "^0.14.0-rc.1"
   },
   "peerDependencies": {
-    "mdast": ">=0.1.0"
+    "mdast": ">=0.14.0-rc.1"
   },
   "devDependencies": {
     "chalk": "^1.0.0",
