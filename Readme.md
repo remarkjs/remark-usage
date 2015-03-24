@@ -74,18 +74,18 @@ The example is run as JavaScript. Line comments are parsed as Markdown. Calls to
 
 It’s easiest to check out and compare [`example.js`](example.js) with the above [Usage](#usage) section.
 
-- Operate this from an npm package, or provide a `cwd`;
-- Make sure no side effect occur when running `example.js`!
-- Don’t do crazy things. This is mostly regexes!
+*   Operate this from an npm package, or provide a `cwd`;
+*   Make sure no side effect occur when running `example.js`!
+*   Don’t do crazy things. This is mostly regexes!
 
 You can provide options to [`mdast.parse()`](https://github.com/wooorm/mdast#mdastparsevalue-options):
 
 Options:
 
-- `cwd` (string?) — Path to a directory containing a node module. Used to infer `name`, `main`, and `example`;
-- `name` (string?) — Name of the module. Inferred from `package.json`s `name` property. Used to rewrite `require('./index.js')` to `require('some-name')`;
-- `main` (string?) — Path to the main script. Resolved from `package.json`s `main` property (or `index.js`). Used to rewrite `require('./index.js')` to `require('some-name')`.
-- `example` (string?) — Path to the example script. **mdast-usage** checks for `docs/example.js`, `doc/example.js`, `examples/index.js`, `example/index.js`, and `example.js`.
+*   `cwd` (string?) — Path to a directory containing a node module. Used to infer `name`, `main`, and `example`;
+*   `name` (string?) — Name of the module. Inferred from `package.json`s `name` property. Used to rewrite `require('./index.js')` to `require('some-name')`;
+*   `main` (string?) — Path to the main script. Resolved from `package.json`s `main` property (or `index.js`). Used to rewrite `require('./index.js')` to `require('some-name')`.
+*   `example` (string?) — Path to the example script. **mdast-usage** checks for `docs/example.js`, `doc/example.js`, `examples/index.js`, `example/index.js`, and `example.js`.
 
 ## License
 

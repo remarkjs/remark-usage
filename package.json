@@ -40,8 +40,9 @@
     "lint-style": "jscs --reporter inline index.js test/index.js",
     "lint": "npm run lint-api && npm run lint-test && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
-    "build-example": "mdast --use ./ Readme.md -o",
-    "build": "npm run build-example",
+    "build-md": "mdast --quiet . -o",
+    "build-history": "mdast History.md --setting setext --no-ignore -o",
+    "build": "npm run build-md && npm run build-history",
     "prepublish": "npm run build"
   }
 }
