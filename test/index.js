@@ -68,7 +68,7 @@ function describeFixture(fixture) {
         fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : '';
 
         try {
-            result = mdast.stringify(mdast.use(usage, config).parse(input));
+            result = mdast.use(usage, config).process(input);
 
             assert(result === output);
         } catch (exception) {

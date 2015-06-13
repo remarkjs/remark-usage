@@ -15,10 +15,10 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
-    "mdast": "^0.14.0-rc.1"
+    "mdast": "^0.22.0"
   },
   "peerDependencies": {
-    "mdast": ">=0.14.0-rc.1"
+    "mdast": ">=0.22.0"
   },
   "devDependencies": {
     "chalk": "^1.0.0",
@@ -40,7 +40,7 @@
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
     "build-md": "mdast --quiet . -o",
-    "build-history": "mdast History.md --setting setext --no-ignore -o",
+    "build-history": "mdast History.md --setting setext:true --no-ignore -o",
     "build": "npm run build-md && npm run build-history",
     "prepublish": "npm run build"
   }
