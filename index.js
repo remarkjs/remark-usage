@@ -252,6 +252,19 @@ function log(info) {
 }
 
 /**
+ * Parse markdown into nodes, without positional
+ * information.
+ *
+ * @param {string} value
+ * @return {Array.<Node>}
+ */
+function parse(value) {
+    return mdast.parse(value, {
+        'position': false
+    }).children;
+}
+
+/**
  * Post-process the example document.
  *
  * @param {string} value
@@ -307,7 +320,7 @@ function postprocess(value, logs, options) {
         var lang;
 
         if (token.type === 'markdown') {
-            markdown = markdown.concat(mdast.parse(token.value).children);
+            markdown = markdown.concat(parse(token.value));
         } else {
             prev = markdown[markdown.length - 1];
             lang = 'lang' in token ? token.lang : token.type;
