@@ -1,6 +1,9 @@
 {
   "plugins": [
-    "./"
+    "lint",
+    "github",
+    "./",
+    "yaml-config"
   ],
   "settings": {
     "bullet": "*"

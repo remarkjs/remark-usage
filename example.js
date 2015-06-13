@@ -11,8 +11,8 @@ var mdast = require('mdast');
  */
 var usage = require('./index.js'); // This is changed from `./index.js` to `mdast-usage`
 
-// Read and parse `Readme.md`:
-var readme = fs.readFileSync('Readme.md', 'utf-8');
+// Read and parse `readme.md`:
+var readme = fs.readFileSync('readme.md', 'utf-8');
 var ast = mdast.use(usage).parse(readme);
 
 // Log something with a language flag:

@@ -52,7 +52,7 @@ function describeFixture(fixture) {
     it('should work on `' + fixture + '`', function () {
         var filepath = ROOT + '/' + fixture;
         var config = filepath + '/config.json';
-        var output = filepath + '/Output.md';
+        var output = filepath + '/output.md';
         var input;
         var result;
         var fail;
@@ -61,7 +61,7 @@ function describeFixture(fixture) {
         config = exists(config) ? require(config) : {};
         output = exists(output) ? read(output, 'utf-8') : '';
 
-        input = read(filepath + '/Readme.md', 'utf-8');
+        input = read(filepath + '/readme.md', 'utf-8');
 
         config.cwd = filepath;
 

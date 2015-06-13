@@ -1,5 +1,2 @@
-# Uses different styling, so processed separately.
-History.md
-
 # Make sure the fixtures do not get overwritten.
 test/

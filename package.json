@@ -1,7 +1,7 @@
 {
   "name": "mdast-usage",
   "version": "0.2.0",
-  "description": "Add a usage example to your Readme",
+  "description": "Add a usage example to your README",
   "license": "MIT",
   "keywords": [
     "text",
@@ -27,6 +27,9 @@
     "istanbul": "^0.3.0",
     "jscs": "^1.0.0",
     "jscs-jsdoc": "^1.0.0",
+    "mdast-github": "^0.3.0",
+    "mdast-lint": "^0.2.0",
+    "mdast-yaml-config": "^0.1.0",
     "mocha": "^2.0.0"
   },
   "scripts": {
@@ -39,9 +42,8 @@
     "lint-style": "jscs --reporter inline .",
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
-    "build-md": "mdast --quiet . -o",
-    "build-history": "mdast History.md --setting setext:true --no-ignore -o",
-    "build": "npm run build-md && npm run build-history",
+    "build-md": "mdast . --output --quiet",
+    "build": "npm run build-md",
     "prepublish": "npm run build"
   }
 }
