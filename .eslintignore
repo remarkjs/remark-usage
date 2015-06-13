@@ -1,0 +1,5 @@
+build/
+coverage/
+test/fixtures/
+build.js
+example.js
