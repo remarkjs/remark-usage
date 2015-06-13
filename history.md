@@ -5,6 +5,11 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+0.3.1 / 2015-06-13
+==================
+
+*   Remove positional information from parsed markdown ([16a83e3](https://github.com/wooorm/mdast-usage/commit/16a83e3))
+
 0.3.0 / 2015-06-13
 ==================
 
