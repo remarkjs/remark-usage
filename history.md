@@ -5,6 +5,12 @@ mdast:
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+0.3.2 / 2015-07-06
+==================
+
+*   Refactor to externalise to-string utility ([1a9f1a7](https://github.com/wooorm/mdast-usage/commit/1a9f1a7))
+*   Update mdast, eslint, dev-dependencies ([17136e8](https://github.com/wooorm/mdast-usage/commit/17136e8))
+
 0.3.1 / 2015-06-13
 ==================
 
