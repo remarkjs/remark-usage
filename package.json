@@ -44,7 +44,6 @@
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
     "build-md": "mdast . --output --quiet",
-    "build": "npm run build-md",
-    "prepublish": "npm run build"
+    "build": "npm run build-md"
   }
 }
