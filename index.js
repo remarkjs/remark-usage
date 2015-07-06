@@ -7,6 +7,7 @@
 var fs = require('fs');
 var path = require('path');
 var mdast = require('mdast');
+var toString = require('mdast-util-to-string');
 
 /*
  * Methods.
@@ -54,30 +55,6 @@ function intercept(object, name, callback) {
     return function () {
         object[name] = original;
     };
-}
-
-/**
- * Get the value of `node`.
- *
- * @param {Node} node
- * @return {string}
- */
-function getValue(node) {
-    return node &&
-        ('value' in node ? node.value :
-        ('alt' in node ? node.alt : node.title)) || '';
-}
-
-/**
- * Returns the text content of a node.
- * Checks `alt` or `title` when no value or children
- * exist.
- *
- * @param {Node} node
- * @return {string}
- */
-function toString(node) {
-    return getValue(node) || node.children.map(toString).join('');
 }
 
 /**

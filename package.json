@@ -15,7 +15,8 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
-    "mdast": "^0.26.0"
+    "mdast": "^0.26.0",
+    "mdast-util-to-string": "^0.1.0"
   },
   "peerDependencies": {
     "mdast": ">=0.26.0"
