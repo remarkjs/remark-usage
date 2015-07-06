@@ -43,7 +43,7 @@ var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
  *
  * @param {Object} object
  * @param {string} name
- * @param {function(args...)} callback
+ * @param {Function} callback
  * @return {Function} A method to stop intercepting.
  */
 function intercept(object, name, callback) {

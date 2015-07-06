@@ -15,21 +15,21 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
-    "mdast": "^0.22.0"
+    "mdast": "^0.26.0"
   },
   "peerDependencies": {
-    "mdast": ">=0.22.0"
+    "mdast": ">=0.26.0"
   },
   "devDependencies": {
     "chalk": "^1.0.0",
     "diff": "^1.2.2",
-    "eslint": "^0.21.0",
+    "eslint": "^0.24.0",
     "istanbul": "^0.3.0",
     "jscs": "^1.0.0",
     "jscs-jsdoc": "^1.0.0",
     "mdast-github": "^0.3.0",
-    "mdast-lint": "^0.2.0",
-    "mdast-yaml-config": "^0.1.0",
+    "mdast-lint": "^0.4.0",
+    "mdast-yaml-config": "^0.2.0",
     "mocha": "^2.0.0"
   },
   "scripts": {
