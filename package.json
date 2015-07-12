@@ -18,9 +18,6 @@
     "mdast": "^0.26.0",
     "mdast-util-to-string": "^0.1.0"
   },
-  "peerDependencies": {
-    "mdast": ">=0.26.0"
-  },
   "devDependencies": {
     "chalk": "^1.0.0",
     "diff": "^1.2.2",
