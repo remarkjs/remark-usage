@@ -15,8 +15,11 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "dependencies": {
+    "cept": "^1.0.0",
     "mdast": "^0.26.0",
-    "mdast-util-to-string": "^0.1.0"
+    "mdast-util-to-string": "^0.1.0",
+    "trim-trailing-lines": "^1.0.0",
+    "unquote": "^1.1.0"
   },
   "devDependencies": {
     "chalk": "^1.0.0",

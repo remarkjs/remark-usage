@@ -8,6 +8,9 @@ var fs = require('fs');
 var path = require('path');
 var mdast = require('mdast');
 var toString = require('mdast-util-to-string');
+var trimTrailingLines = require('trim-trailing-lines');
+var unquote = require('unquote');
+var cept = require('cept');
 
 /*
  * Methods.
@@ -38,44 +41,6 @@ var EXAMPLES = [
 var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g;
 var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g;
 var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
-
-/**
- * Intercept calls to `name` on `object`.
- *
- * @param {Object} object
- * @param {string} name
- * @param {Function} callback
- * @return {Function} A method to stop intercepting.
- */
-function intercept(object, name, callback) {
-    var original = object[name];
-
-    object[name] = callback;
-
-    return function () {
-        object[name] = original;
-    };
-}
-
-/**
- * Unquote a string.
- *
- * @param {string} value
- * @return {string}
- */
-function unquote(value) {
-    return value.replace(/^["']|["']$/g, '');
-}
-
-/**
- * Remove trailing EOLs at the end of a string.
- *
- * @param {string} value
- * @return {string}
- */
-function removeTrailingEOLs(value) {
-    return value.replace(/\n+$/g, '');
-}
 
 /**
  * Check if `node` is the main heading.
@@ -316,7 +281,7 @@ function postprocess(value, logs, options) {
 
     markdown = markdown.filter(function (token) {
         if ('value' in token) {
-            token.value = removeTrailingEOLs(token.value);
+            token.value = trimTrailingLines(token.value);
 
             return token.value !== '';
         }
@@ -372,7 +337,7 @@ function transformerFactory(options) {
          * TODO: better tmp file management.
          */
 
-        stop = intercept(console, 'log', function (id, lang, value) {
+        stop = cept(console, 'log', function (id, lang, value) {
             if (!value) {
                 value = lang;
                 lang = null;
