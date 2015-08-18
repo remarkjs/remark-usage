@@ -1,4 +1,4 @@
-# mdast-usage [![Build Status](https://img.shields.io/travis/wooorm/mdast-usage.svg?style=flat)](https://travis-ci.org/wooorm/mdast-usage) [![Coverage Status](https://img.shields.io/coveralls/wooorm/mdast-usage.svg?style=flat)](https://coveralls.io/r/wooorm/mdast-usage?branch=master)
+# mdast-usage [![Build Status](https://img.shields.io/travis/wooorm/mdast-usage.svg)](https://travis-ci.org/wooorm/mdast-usage) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/mdast-usage.svg)](https://codecov.io/github/wooorm/mdast-usage)
 
 Add a [usage](#usage) example to a README.
 
