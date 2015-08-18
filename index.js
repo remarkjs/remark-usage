@@ -1,3 +1,11 @@
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module mdast:usage
+ * @fileoverview Add a usage example to your README.
+ */
+
 'use strict';
 
 /*
@@ -45,7 +53,7 @@ var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
 /**
  * Check if `node` is the main heading.
  *
- * @param {Node} node
+ * @param {Node} node - Node to check.
  * @return {boolean}
  */
 function isOpeningHeading(node, depth) {
@@ -56,8 +64,8 @@ function isOpeningHeading(node, depth) {
 /**
  * Check if `node` is the next heading.
  *
- * @param {Node} node
- * @param {number} depth
+ * @param {Node} node - Node to check.
+ * @param {number} depth - Depth of node.
  * @return {boolean}
  */
 function isClosingHeading(node, depth) {
@@ -67,7 +75,7 @@ function isClosingHeading(node, depth) {
 /**
  * Search a node for a main heading.
  *
- * @param {Node} root
+ * @param {Node} root - Node to search.
  * @return {number?}
  */
 function search(root) {
@@ -108,7 +116,7 @@ function search(root) {
  * Preprocess `value` to add IDs to
  * `console.log` invocations.
  *
- * @param {string} value
+ * @param {string} value - Content to process.
  * @return {string}
  */
 function preprocess(value) {
@@ -127,7 +135,7 @@ function preprocess(value) {
  * removes the IDs from `console.log` invocations,
  * and resolves the main `require` call.
  *
- * @param {string} source
+ * @param {string} source - Scripts source.
  * @return {Array.<Object>}
  */
 function script(source, options) {
@@ -182,7 +190,7 @@ function script(source, options) {
 /**
  * Transform a log into an mdast `code` node.
  *
- * @param {Object} info
+ * @param {Object} info - Code node.
  * @return {Node}
  */
 function log(info) {
@@ -197,7 +205,7 @@ function log(info) {
  * Parse markdown into nodes, without positional
  * information.
  *
- * @param {string} value
+ * @param {string} value - Value to parse.
  * @return {Array.<Node>}
  */
 function parse(value) {
@@ -209,8 +217,8 @@ function parse(value) {
 /**
  * Post-process the example document.
  *
- * @param {string} value
- * @param {Object} logs
+ * @param {string} value - Content to process.
+ * @param {Object} logs - List of logs.
  * @return {Array.<Node>}
  */
 function postprocess(value, logs, options) {
@@ -295,7 +303,7 @@ function postprocess(value, logs, options) {
 /**
  * Construct a transformer based on `options`.
  *
- * @param {Object} options
+ * @param {Object} options - Configuration.
  * @return {function(node)}
  */
 function transformerFactory(options) {
@@ -303,7 +311,7 @@ function transformerFactory(options) {
      * Adds an example section based on a valid example
      * JavaScript document to a `Usage` section.
      *
-     * @param {Node} node
+     * @param {Node} node - Node to transform.
      */
     return function (node) {
         var logs = {};
@@ -386,11 +394,11 @@ function transformerFactory(options) {
  * Adds an npm version badge to the main heading,
  * when available.
  *
- * @param {MDAST} _
- * @param {Object?} options
+ * @param {MDAST} mdast - Instance
+ * @param {Object?} options - Configuration.
  * @return {function(Node)}
  */
-function attacher(_, options) {
+function attacher(mdast, options) {
     var settings = {};
     var pack;
     var main;

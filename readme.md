@@ -85,7 +85,7 @@ above [Usage](#usage) section.
 
 *   Operate this from an npm package, or provide a `cwd`;
 *   Make sure no side effects occur when running `example.js`!
-*   Don’t do crazy things. This is mostly regexes!
+*   Don’t do weird things. This is mostly regexes!
 
 You can provide options to [`mdast.use()`](https://github.com/wooorm/mdast#mdastuseplugin-options):
 
