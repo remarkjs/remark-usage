@@ -15,7 +15,7 @@
 var fs = require('fs');
 var path = require('path');
 var mdast = require('mdast');
-var toString = require('mdast-util-to-string');
+var heading = require('mdast-util-heading-range');
 var trimTrailingLines = require('trim-trailing-lines');
 var unquote = require('unquote');
 var cept = require('cept');
@@ -49,68 +49,6 @@ var EXAMPLES = [
 var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g;
 var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g;
 var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
-
-/**
- * Check if `node` is the main heading.
- *
- * @param {Node} node - Node to check.
- * @return {boolean}
- */
-function isOpeningHeading(node, depth) {
-    return depth === null && node && node.type === 'heading' &&
-        /^usage$/i.test(toString(node));
-}
-
-/**
- * Check if `node` is the next heading.
- *
- * @param {Node} node - Node to check.
- * @param {number} depth - Depth of node.
- * @return {boolean}
- */
-function isClosingHeading(node, depth) {
-    return depth && node && node.type === 'heading' && node.depth <= depth;
-}
-
-/**
- * Search a node for a main heading.
- *
- * @param {Node} root - Node to search.
- * @return {number?}
- */
-function search(root) {
-    var index = -1;
-    var length = root.children.length;
-    var depth = null;
-    var child;
-    var headingIndex;
-    var closingIndex;
-
-    while (++index < length) {
-        child = root.children[index];
-
-        if (isClosingHeading(child, depth)) {
-            closingIndex = index;
-
-            break;
-        }
-
-        if (isOpeningHeading(child, depth)) {
-            headingIndex = index + 1;
-            depth = child.depth;
-        }
-    }
-
-    if (headingIndex) {
-        if (!closingIndex) {
-            closingIndex = length + 1;
-        }
-
-        root.children.splice(headingIndex, closingIndex - headingIndex);
-    }
-
-    return headingIndex || null;
-}
 
 /**
  * Preprocess `value` to add IDs to
@@ -306,24 +244,20 @@ function postprocess(value, logs, options) {
  * @param {Object} options - Configuration.
  * @return {function(node)}
  */
-function transformerFactory(options) {
+function runFactory(options) {
     /**
      * Adds an example section based on a valid example
      * JavaScript document to a `Usage` section.
      *
-     * @param {Node} node - Node to transform.
+     * @param {Node} start - Starting heading.
+     * @param {Array.<Node>} nodes - Content.
      */
-    return function (node) {
+    return function (start, nodes, end) {
         var logs = {};
-        var index = search(node);
         var example;
         var source;
         var tmp;
         var stop;
-
-        if (index === null) {
-            return;
-        }
 
         example = options.example;
 
@@ -382,11 +316,7 @@ function transformerFactory(options) {
          * Add markdown.
          */
 
-        node.children = [].concat(
-            node.children.slice(0, index),
-            postprocess(source, logs, options),
-            node.children.slice(index)
-        );
+        return [start].concat(postprocess(source, logs, options), end);
     };
 }
 
@@ -396,7 +326,6 @@ function transformerFactory(options) {
  *
  * @param {MDAST} mdast - Instance
  * @param {Object?} options - Configuration.
- * @return {function(Node)}
  */
 function attacher(mdast, options) {
     var settings = {};
@@ -456,7 +385,7 @@ function attacher(mdast, options) {
     settings.main = main;
     settings.example = example;
 
-    return transformerFactory(settings);
+    mdast.use(heading(/^usage$/i, runFactory(settings)));
 }
 
 /*
