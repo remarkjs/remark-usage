@@ -2,6 +2,16 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0 / 2015-08-19
+==================
+
+*   Add missing dev-dependency updates ([3ecdee4](https://github.com/wooorm/mdast-usage/commit/3ecdee4))
+*   Refactor to externalise `mdast-util-heading-range` ([6212e53](https://github.com/wooorm/mdast-usage/commit/6212e53))
+*   Fix indent in `.editorconfig` for `.mdastrc` ([e383553](https://github.com/wooorm/mdast-usage/commit/e383553))
+*   Add missing `output` to `.mdastrc` ([82c6ac4](https://github.com/wooorm/mdast-usage/commit/82c6ac4))
+*   Replace coveralls with codecov ([689ddfe](https://github.com/wooorm/mdast-usage/commit/689ddfe))
+*   Update dependencies, dev-dependencies ([4f60345](https://github.com/wooorm/mdast-usage/commit/4f60345))
+
 0.3.3 / 2015-07-12
 ==================
 
