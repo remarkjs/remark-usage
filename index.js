@@ -15,6 +15,7 @@
 var fs = require('fs');
 var path = require('path');
 var mdast = require('mdast');
+var uncached = require('require-uncached');
 var heading = require('mdast-util-heading-range');
 var trimTrailingLines = require('trim-trailing-lines');
 var unquote = require('unquote');
@@ -295,7 +296,7 @@ function runFactory(options) {
         });
 
         try {
-            require(tmp);
+            uncached(tmp);
         } catch (exception) {
             exception.message =
                 'Invalid example `' + example + '`. ' +

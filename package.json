@@ -18,6 +18,7 @@
     "cept": "^1.0.0",
     "mdast": "^1.0.0",
     "mdast-util-heading-range": "^1.0.0",
+    "require-uncached": "^1.0.2",
     "trim-trailing-lines": "^1.0.0",
     "unquote": "^1.1.0"
   },
