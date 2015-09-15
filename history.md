@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.1 / 2015-09-15
+==================
+
+*   Fix bug when plugin ran multiple times ([e3afca1](https://github.com/wooorm/mdast-usage/commit/e3afca1))
+*   Update dev-dependencies ([318def7](https://github.com/wooorm/mdast-usage/commit/318def7))
+
 1.0.0 / 2015-08-19
 ==================
 
