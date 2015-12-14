@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.0.0-alpha.1 / 2015-12-14
+==========================
+
+*   Update dependencies for changes in mdast ([ae57f51](https://github.com/wooorm/mdast-usage/commit/ae57f51))
+
 1.0.1 / 2015-09-15
 ==================
 

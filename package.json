@@ -1,6 +1,6 @@
 {
   "name": "mdast-usage",
-  "version": "1.0.1",
+  "version": "2.0.0-alpha.1",
   "description": "Add a usage example to your README",
   "license": "MIT",
   "keywords": [
