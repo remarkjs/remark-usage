@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "cept": "^1.0.0",
-    "mdast": "^1.0.0",
+    "mdast": "^3.0.0-alpha.3",
     "mdast-util-heading-range": "^1.0.0",
     "require-uncached": "^1.0.2",
     "trim-trailing-lines": "^1.0.0",
@@ -27,10 +27,10 @@
     "istanbul": "^0.3.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "mdast-github": "^1.0.0",
-    "mdast-lint": "^1.0.0",
+    "mdast-github": "^2.0.0-alpha.1",
+    "mdast-lint": "^2.0.0-alpha.1",
     "mdast-slug": "^2.0.0",
-    "mdast-comment-config": "^1.0.0",
+    "mdast-comment-config": "^2.0.0-alpha.1",
     "mdast-validate-links": "^1.0.0",
     "mocha": "^2.0.0"
   },
