@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.0.0 / 2015-12-24
+==================
+
+*   Add temporary warning to `readme.md` ([da77edf](https://github.com/wooorm/remark-usage/commit/da77edf))
+*   Rename `mdast-usage` > `remark-usage` ([010469a](https://github.com/wooorm/remark-usage/commit/010469a))
+*   Update dependencies for changes in mdast ([ae57f51](https://github.com/wooorm/remark-usage/commit/ae57f51))
+
 1.0.1 / 2015-09-15
 ==================
 
