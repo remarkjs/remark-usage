@@ -3,7 +3,7 @@
  * @copyright 2015 Titus Wormer
  * @license MIT
  * @module mdast:usage:test
- * @fileoverview Test suite for mdast-usage.
+ * @fileoverview Test suite for remark-usage.
  */
 
 'use strict';
@@ -32,7 +32,7 @@ var equal = assert.strictEqual;
  * Tests.
  */
 
-describe('mdast-usage()', function () {
+describe('remark-usage()', function () {
     it('should be a function', function () {
         equal(typeof usage, 'function');
     });

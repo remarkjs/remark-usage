@@ -2,24 +2,24 @@
 
 // Require dependencies:
 var fs = require('fs');
-var mdast = require('mdast');
+var remark = require('remark');
 
 // Require usage:
 /*
  * The below is changed because a require to the main
  * module file is detected.
  */
-var usage = require('./index.js'); // This is changed from `./index.js` to `mdast-usage`
+var usage = require('./index.js'); // This is changed from `./index.js` to `remark-usage`
 
 // Read and parse `readme.md`:
 var readme = fs.readFileSync('readme.md', 'utf-8');
-var ast = mdast.use(usage).parse(readme);
+var ast = remark.use(usage).parse(readme);
 
 // Log something with a language flag:
-console.log('markdown', mdast.stringify(ast.children[1]));
+console.log('markdown', remark.stringify(ast.children[1]));
 
 // Or without language:
-console.log(mdast.stringify(ast.children[2]));
+console.log(remark.stringify(ast.children[2]));
 
 // Log something which is never captured:
 function neverCalled() {

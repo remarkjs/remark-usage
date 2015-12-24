@@ -2,7 +2,7 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:usage
+ * @module remark:usage
  * @fileoverview Add a usage example to your README.
  */
 
@@ -63,7 +63,7 @@ function preprocess(value) {
 
     value = value.replace(EXPRESSION_LOG, function ($0, $1, $2, $3) {
         index++;
-        return $1 + '"mdast-usage-' + index + '",' + $2 + $3;
+        return $1 + '"remark-usage-' + index + '",' + $2 + $3;
     });
 
     return value;
@@ -325,10 +325,10 @@ function runFactory(options) {
  * Adds an npm version badge to the main heading,
  * when available.
  *
- * @param {MDAST} mdast - Instance
+ * @param {Remark} remark - Instance
  * @param {Object?} options - Configuration.
  */
-function attacher(mdast, options) {
+function attacher(remark, options) {
     var settings = {};
     var pack;
     var main;
@@ -386,7 +386,7 @@ function attacher(mdast, options) {
     settings.main = main;
     settings.example = example;
 
-    mdast.use(heading(/^usage$/i, runFactory(settings)));
+    remark.use(heading(/^usage$/i, runFactory(settings)));
 }
 
 /*

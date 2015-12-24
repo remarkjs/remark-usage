@@ -1,4 +1,4 @@
-# mdast-usage [![Build Status](https://img.shields.io/travis/wooorm/mdast-usage.svg)](https://travis-ci.org/wooorm/mdast-usage) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/mdast-usage.svg)](https://codecov.io/github/wooorm/mdast-usage)
+# remark-usage [![Build Status](https://img.shields.io/travis/wooorm/remark-usage.svg)](https://travis-ci.org/wooorm/remark-usage) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg)](https://codecov.io/github/wooorm/remark-usage)
 
 Add a [usage](#usage) example to a README.
 
@@ -7,7 +7,7 @@ Add a [usage](#usage) example to a README.
 [npm](https://docs.npmjs.com/cli/install):
 
 ```bash
-npm install mdast-usage
+npm install remark-usage
 ```
 
 <!--lint disable code-block-style-->
@@ -20,7 +20,7 @@ Require dependencies:
 
 ```javascript
 var fs = require('fs');
-var mdast = require('mdast');
+var remark = require('remark');
 ```
 
 Require usage:
@@ -30,14 +30,14 @@ Require usage:
  * The below is changed because a require to the main
  * module file is detected.
  */
-var usage = require('mdast-usage'); // This is changed from `./index.js` to `mdast-usage`
+var usage = require('remark-usage'); // This is changed from `./index.js` to `remark-usage`
 ```
 
 Read and parse `readme.md`:
 
 ```javascript
 var readme = fs.readFileSync('readme.md', 'utf-8');
-var ast = mdast.use(usage).parse(readme);
+var ast = remark.use(usage).parse(readme);
 ```
 
 Log something with a language flag:
@@ -68,7 +68,7 @@ console.log(this);
 
 <!--lint enable code-block-style-->
 
-### [mdast](https://github.com/wooorm/mdast#api).[use](https://github.com/wooorm/mdast#mdastuseplugin-options)(usage, options)
+### [remark](https://github.com/wooorm/remark#api).[use](https://github.com/wooorm/remark#remarkuseplugin-options)(usage, options)
 
 Adds `example.js` to the `Usage` section in a `readme.md`.
 
@@ -87,7 +87,7 @@ above [Usage](#usage) section.
 *   Make sure no side effects occur when running `example.js`!
 *   Don’t do weird things. This is mostly regexes!
 
-You can provide options to [`mdast.use()`](https://github.com/wooorm/mdast#mdastuseplugin-options):
+You can provide options to [`remark.use()`](https://github.com/wooorm/remark#remarkuseplugin-options):
 
 Options:
 
@@ -102,7 +102,7 @@ Options:
     `main` property (or `index.js`). Used to rewrite `require('./index.js')`
     to `require('some-name')`.
 
-*   `example` (string?) — Path to the example script. **mdast-usage** checks
+*   `example` (string?) — Path to the example script. **remark-usage** checks
     for `docs/example.js`, `doc/example.js`, `examples/index.js`,
     `example/index.js`, and `example.js`.
 

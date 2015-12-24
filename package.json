@@ -1,5 +1,5 @@
 {
-  "name": "mdast-usage",
+  "name": "remark-usage",
   "version": "1.0.1",
   "description": "Add a usage example to your README",
   "license": "MIT",
@@ -9,14 +9,14 @@
     "plain",
     "text"
   ],
-  "repository": "wooorm/mdast-usage",
+  "repository": "wooorm/remark-usage",
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "files": [
     "index.js"
   ],
   "dependencies": {
     "cept": "^1.0.0",
-    "mdast": "^3.0.0-alpha.3",
+    "mdast": "^3.0.0-alpha.5",
     "mdast-util-heading-range": "^1.0.0",
     "require-uncached": "^1.0.2",
     "trim-trailing-lines": "^1.0.0",
