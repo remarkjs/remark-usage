@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.0.1 / 2015-12-25
+==================
+
+*   Refactor to replace mocha with tape ([a8d7a48](https://github.com/wooorm/remark-usage/commit/a8d7a48))
+*   Replace internal dependency of mdast > remark ([27cb95a](https://github.com/wooorm/remark-usage/commit/27cb95a))
+
 2.0.0 / 2015-12-24
 ==================
 
