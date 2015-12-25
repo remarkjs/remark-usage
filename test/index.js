@@ -2,7 +2,7 @@
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
  * @license MIT
- * @module mdast:usage:test
+ * @module remark:usage:test
  * @fileoverview Test suite for remark-usage.
  */
 
@@ -15,7 +15,7 @@
  */
 
 var usage = require('..');
-var mdast = require('mdast');
+var remark = require('remark');
 var path = require('path');
 var fs = require('fs');
 var assert = require('assert');
@@ -39,7 +39,7 @@ describe('remark-usage()', function () {
 
     it('should not throw if not passed options', function () {
         assert.doesNotThrow(function () {
-            usage(mdast);
+            usage(remark);
         });
     });
 });
@@ -74,7 +74,7 @@ function describeFixture(fixture) {
         fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : '';
 
         try {
-            result = mdast.use(usage, config).process(input);
+            result = remark.use(usage, config).process(input);
 
             equal(result, output);
         } catch (exception) {

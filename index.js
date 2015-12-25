@@ -14,7 +14,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var mdast = require('mdast');
+var remark = require('remark');
 var uncached = require('require-uncached');
 var heading = require('mdast-util-heading-range');
 var trimTrailingLines = require('trim-trailing-lines');
@@ -148,7 +148,7 @@ function log(info) {
  * @return {Array.<Node>}
  */
 function parse(value) {
-    return mdast.parse(value, {
+    return remark.parse(value, {
         'position': false
     }).children;
 }
