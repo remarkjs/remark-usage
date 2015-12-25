@@ -8,17 +8,17 @@
 
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env node */
 
 /*
  * Dependencies.
  */
 
-var usage = require('..');
-var remark = require('remark');
-var path = require('path');
 var fs = require('fs');
-var assert = require('assert');
+var path = require('path');
+var test = require('tape');
+var remark = require('remark');
+var usage = require('..');
 
 /*
  * Methods.
@@ -26,22 +26,19 @@ var assert = require('assert');
 
 var read = fs.readFileSync;
 var exists = fs.existsSync;
-var equal = assert.strictEqual;
 
 /*
  * Tests.
  */
 
-describe('remark-usage()', function () {
-    it('should be a function', function () {
-        equal(typeof usage, 'function');
-    });
+test('remark-usage()', function (t) {
+    t.equal(typeof usage, 'function', 'should be a function');
 
-    it('should not throw if not passed options', function () {
-        assert.doesNotThrow(function () {
-            usage(remark);
-        });
-    });
+    t.doesNotThrow(function () {
+        usage(remark);
+    }, 'should not throw if not passed options');
+
+    t.end();
 });
 
 /*
@@ -50,13 +47,18 @@ describe('remark-usage()', function () {
 
 var ROOT = path.join(__dirname, 'fixtures');
 
-/**
- * Describe a fixtures.
- *
- * @param {string} fixture - Name.
+/*
+ * Gather fixtures.
  */
-function describeFixture(fixture) {
-    it('should work on `' + fixture + '`', function () {
+
+var fixtures = fs.readdirSync(ROOT);
+
+fixtures = fixtures.filter(function (filepath) {
+    return filepath.indexOf('.') !== 0;
+});
+
+test('Fixtures', function (t) {
+    fixtures.forEach(function (fixture) {
         var filepath = ROOT + '/' + fixture;
         var config = filepath + '/config.json';
         var output = filepath + '/output.md';
@@ -76,29 +78,21 @@ function describeFixture(fixture) {
         try {
             result = remark.use(usage, config).process(input);
 
-            equal(result, output);
+            t.equal(result, output, 'should work on `' + fixture + '`');
         } catch (exception) {
-            if (fail) {
-                fail = new RegExp(fail.replace(/-/, ' '), 'i');
-
-                equal(fail.test(exception), true);
-            } else {
+            if (!fail) {
                 throw exception;
             }
+
+            fail = new RegExp(fail.replace(/-/, ' '), 'i');
+
+            t.equal(
+                fail.test(exception),
+                true,
+                'should fail on `' + fixture + '`'
+            );
         }
     });
-}
 
-/*
- * Gather fixtures.
- */
-
-var fixtures = fs.readdirSync(ROOT);
-
-fixtures = fixtures.filter(function (filepath) {
-    return filepath.indexOf('.') !== 0;
-});
-
-describe('Fixtures', function () {
-    fixtures.forEach(describeFixture);
+    t.end();
 });
