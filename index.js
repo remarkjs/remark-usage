@@ -8,6 +8,8 @@
 
 'use strict';
 
+/* eslint-env node */
+
 /*
  * Dependencies.
  */
@@ -56,7 +58,7 @@ var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
  * `console.log` invocations.
  *
  * @param {string} value - Content to process.
- * @return {string}
+ * @return {string} - Preprocessed `value`.
  */
 function preprocess(value) {
     var index = 0;
@@ -75,7 +77,8 @@ function preprocess(value) {
  * and resolves the main `require` call.
  *
  * @param {string} source - Scripts source.
- * @return {Array.<Object>}
+ * @param {Object} options - Configuration.
+ * @return {Array.<Object>} - List of tokens.
  */
 function script(source, options) {
     var tokens;
@@ -130,7 +133,7 @@ function script(source, options) {
  * Transform a log into an mdast `code` node.
  *
  * @param {Object} info - Code node.
- * @return {Node}
+ * @return {Node} - mdast node.
  */
 function log(info) {
     return {
@@ -145,7 +148,7 @@ function log(info) {
  * information.
  *
  * @param {string} value - Value to parse.
- * @return {Array.<Node>}
+ * @return {Array.<Node>} - List of mdast nodes.
  */
 function parse(value) {
     return remark.parse(value, {
@@ -158,7 +161,8 @@ function parse(value) {
  *
  * @param {string} value - Content to process.
  * @param {Object} logs - List of logs.
- * @return {Array.<Node>}
+ * @param {Object} options - Configuration.
+ * @return {Array.<Node>} - List of mdast nodes.
  */
 function postprocess(value, logs, options) {
     var tokens = [];
@@ -243,7 +247,7 @@ function postprocess(value, logs, options) {
  * Construct a transformer based on `options`.
  *
  * @param {Object} options - Configuration.
- * @return {function(node)}
+ * @return {function(node)} - Bound heading-range callback.
  */
 function runFactory(options) {
     /**
@@ -252,6 +256,7 @@ function runFactory(options) {
      *
      * @param {Node} start - Starting heading.
      * @param {Array.<Node>} nodes - Content.
+     * @param {Node} end - Ending heading.
      */
     return function (start, nodes, end) {
         var logs = {};
