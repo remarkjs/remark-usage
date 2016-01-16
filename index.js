@@ -53,6 +53,22 @@ var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g;
 var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g;
 var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
 
+/*
+ * Constants.
+ */
+
+var DEFAULT_HEADING = 'usage';
+
+/**
+ * Transform a string into an applicable expression.
+ *
+ * @param {string} value - Content to expressionise.
+ * @return {RegExp} - Expression from `value`.
+ */
+function toExpression(value) {
+    return new RegExp('^(' + value + ')$', 'i');
+}
+
 /**
  * Preprocess `value` to add IDs to
  * `console.log` invocations.
@@ -340,6 +356,7 @@ function attacher(remark, options) {
     var example;
     var name;
     var cwd;
+    var header;
 
     if (options === null || options === undefined) {
         options = {};
@@ -391,7 +408,9 @@ function attacher(remark, options) {
     settings.main = main;
     settings.example = example;
 
-    remark.use(heading(/^usage$/i, runFactory(settings)));
+    header = toExpression(options.heading || DEFAULT_HEADING);
+
+    remark.use(heading(header, runFactory(settings)));
 }
 
 /*
