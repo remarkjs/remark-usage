@@ -106,6 +106,9 @@ Options:
     for `docs/example.js`, `doc/example.js`, `examples/index.js`,
     `example/index.js`, and `example.js`.
 
+*   `heading` (string?, default: `"usage"`) — Heading to look for,
+    wrapped in `new RegExp('^(' + value + ')$', 'i');`.
+
 ## License
 
 [MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
