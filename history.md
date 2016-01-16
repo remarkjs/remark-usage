@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.1.0 / 2016-01-16
+==================
+
+*   Add a custom heading option ([`66f3951`](https://github.com/wooorm/remark-usage/commit/66f3951))
+
 2.0.1 / 2015-12-25
 ==================
 
