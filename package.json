@@ -9,7 +9,11 @@
     "plain",
     "text"
   ],
-  "repository": "wooorm/remark-usage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/remark-usage.git"
+  },
+  "bugs": "https://github.com/wooorm/remark-usage/issues",
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "files": [
     "index.js"
