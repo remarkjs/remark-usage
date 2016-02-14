@@ -3,6 +3,15 @@ node_js:
 - '0.10'
 - '0.11'
 - '0.12'
-- iojs
+- '4.0'
+- '5.0'
 sudo: false
 after_script: npm install codecov.io && cat ./coverage/lcov.info | codecov
+deploy:
+  provider: npm
+  email: tituswormer@gmail.com
+  api_key:
+    secure: eIVmyU17TBnm7xWUGYcSLxU2Mz3XyryVz1YcRFBSWBJPvrc3bFuuXsJpk4zuPUrRrygumYtxTfcSbnAhnmcMO/NUbeWZyl62tR6CAxSVXI3tGdrp06LP8LOnBN4Sz99aPyuwbReuse6gEXAjD06kNVCgozFfmFW4y4fXFeowkSM=
+  on:
+    tags: true
+    repo: wooorm/remark-usage
