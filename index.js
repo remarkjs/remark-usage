@@ -410,7 +410,9 @@ function attacher(remark, options) {
 
     header = toExpression(options.heading || DEFAULT_HEADING);
 
-    remark.use(heading(header, runFactory(settings)));
+    return function (tree) {
+        heading(tree, header, runFactory(settings));
+    };
 }
 
 /*
