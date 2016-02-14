@@ -27,7 +27,7 @@
     "unquote": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^1.0.0",
+    "eslint": "^2.0.0",
     "istanbul": "^0.4.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
