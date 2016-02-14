@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+3.0.0 / 2016-02-14
+==================
+
+*   Update for changes in `remark@4.0.0` ([`f5eb765`](https://github.com/wooorm/remark-usage/commit/f5eb765))
+
 2.1.0 / 2016-01-16
 ==================
 
