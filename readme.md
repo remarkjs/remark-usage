@@ -1,10 +1,10 @@
-# remark-usage [![Build Status](https://img.shields.io/travis/wooorm/remark-usage.svg)](https://travis-ci.org/wooorm/remark-usage) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg)](https://codecov.io/github/wooorm/remark-usage)
+# remark-usage [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
-Add a [usage](#usage) example to a README.
+Add a [usage][] example to a README.
 
 ## Installation
 
-[npm](https://docs.npmjs.com/cli/install):
+[npm][npm-install]:
 
 ```bash
 npm install remark-usage
@@ -14,22 +14,13 @@ npm install remark-usage
 
 ## Usage
 
-This section is rendered by this module from [example.js](example.js).
+This section is rendered by this module from [example.js][example-js].
 
-Require dependencies:
+Dependencies:
 
 ```javascript
 var fs = require('fs');
 var remark = require('remark');
-```
-
-Require usage:
-
-```javascript
-/*
- * The below is changed because a require to the main
- * module file is detected.
- */
 var usage = require('remark-usage'); // This is changed from `./index.js` to `remark-usage`
 ```
 
@@ -43,7 +34,7 @@ var ast = remark.use(usage).parse(readme);
 Log something with a language flag:
 
 ```markdown
-Add a [usage](#usage) example to a README.
+Add a [usage][] example to a README.
 ```
 
 Or without language:
@@ -58,7 +49,7 @@ function neverCalled() {
 }
 ```
 
-Log something which isn’t captured because it’s not not a string.
+Log something which isn’t captured because it’s not a string.
 
 ```javascript
 console.log(this);
@@ -68,7 +59,7 @@ console.log(this);
 
 <!--lint enable code-block-style-->
 
-### [remark](https://github.com/wooorm/remark#api).[use](https://github.com/wooorm/remark#remarkuseplugin-options)(usage, options)
+### `remark.use(usage[, options])`
 
 Adds `example.js` to the `Usage` section in a `readme.md`.
 
@@ -80,35 +71,53 @@ The example is run as JavaScript. Line comments are parsed as Markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
 values (optionally with a language flag).
 
-It’s easiest to check out and compare [`example.js`](example.js) with the
-above [Usage](#usage) section.
+It’s easiest to check out and compare [`example.js`][example-js] with the
+above [Usage][] section.
 
 *   Operate this from an npm package, or provide a `cwd`;
 *   Make sure no side effects occur when running `example.js`!
 *   Don’t do weird things. This is mostly regexes!
 
-You can provide options to [`remark.use()`](https://github.com/wooorm/remark#remarkuseplugin-options):
-
 Options:
 
-*   `cwd` (string?) — Path to a directory containing a node module. Used
+*   `cwd` (`string?`) — Path to a directory containing a node module. Used
     to infer `name`, `main`, and `example`;
 
-*   `name` (string?) — Name of the module. Inferred from `package.json`s
+*   `name` (`string?`) — Name of the module. Inferred from `package.json`s
     `name` property. Used to rewrite `require('./index.js')` to
     `require('some-name')`;
 
-*   `main` (string?) — Path to the main script. Resolved from `package.json`s
+*   `main` (`string?`) — Path to the main script. Resolved from `package.json`s
     `main` property (or `index.js`). Used to rewrite `require('./index.js')`
     to `require('some-name')`.
 
-*   `example` (string?) — Path to the example script. **remark-usage** checks
+*   `example` (`string?`) — Path to the example script. **remark-usage** checks
     for `docs/example.js`, `doc/example.js`, `examples/index.js`,
     `example/index.js`, and `example.js`.
 
-*   `heading` (string?, default: `"usage"`) — Heading to look for,
+*   `heading` (`string?`, default: `"usage"`) — Heading to look for,
     wrapped in `new RegExp('^(' + value + ')$', 'i');`.
 
 ## License
 
-[MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT][license] © [Titus Wormer][author]
+
+<!-- Definitions -->
+
+[travis-badge]: https://img.shields.io/travis/wooorm/remark-usage.svg
+
+[travis]: https://travis-ci.org/wooorm/remark-usage
+
+[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg
+
+[codecov]: https://codecov.io/github/wooorm/remark-usage
+
+[npm-install]: https://docs.npmjs.com/cli/install
+
+[license]: LICENSE
+
+[author]: http://wooorm.com
+
+[usage]: #usage
+
+[example-js]: example.js

@@ -1,14 +1,8 @@
-// This section is rendered by this module from [example.js](example.js).
+// This section is rendered by this module from [example.js][example-js].
 
-// Require dependencies:
+// Dependencies:
 var fs = require('fs');
 var remark = require('remark');
-
-// Require usage:
-/*
- * The below is changed because a require to the main
- * module file is detected.
- */
 var usage = require('./index.js'); // This is changed from `./index.js` to `remark-usage`
 
 // Read and parse `readme.md`:
@@ -26,5 +20,5 @@ function neverCalled() {
     console.log('javascript', 'alert("test")');
 }
 
-// Log something which isn’t captured because it’s not not a string.
+// Log something which isn’t captured because it’s not a string.
 console.log(this);

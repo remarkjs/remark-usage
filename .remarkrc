@@ -5,7 +5,8 @@
     "lint",
     "github",
     "slug",
-    "validate-links"
+    "validate-links",
+    "./"
   ],
   "settings": {
     "bullet": "*"
