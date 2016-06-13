@@ -76,7 +76,7 @@ test('Fixtures', function (t) {
         fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : '';
 
         try {
-            result = remark.use(usage, config).process(input);
+            result = remark().use(usage, config).process(input).toString();
 
             t.equal(result, output, 'should work on `' + fixture + '`');
         } catch (exception) {

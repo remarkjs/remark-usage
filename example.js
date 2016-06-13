@@ -7,13 +7,13 @@ var usage = require('./index.js'); // This is changed from `./index.js` to `rema
 
 // Read and parse `readme.md`:
 var readme = fs.readFileSync('readme.md', 'utf-8');
-var ast = remark.use(usage).parse(readme);
+var ast = remark().use(usage).parse(readme);
 
 // Log something with a language flag:
-console.log('markdown', remark.stringify(ast.children[1]));
+console.log('markdown', remark().stringify(ast.children[1]));
 
 // Or without language:
-console.log(remark.stringify(ast.children[2]));
+console.log(remark().stringify(ast.children[2]));
 
 // Log something which is never captured:
 function neverCalled() {

@@ -28,7 +28,7 @@ Read and parse `readme.md`:
 
 ```javascript
 var readme = fs.readFileSync('readme.md', 'utf-8');
-var ast = remark.use(usage).parse(readme);
+var ast = remark().use(usage).parse(readme);
 ```
 
 Log something with a language flag:

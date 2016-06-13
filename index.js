@@ -167,7 +167,7 @@ function log(info) {
  * @return {Array.<Node>} - List of mdast nodes.
  */
 function parse(value) {
-    return remark.parse(value, {
+    return remark().parse(value, {
         'position': false
     }).children;
 }
