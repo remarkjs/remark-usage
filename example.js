@@ -10,10 +10,10 @@ var readme = fs.readFileSync('readme.md', 'utf-8');
 var ast = remark().use(usage).parse(readme);
 
 // Log something with a language flag:
-console.log('markdown', remark().stringify(ast.children[1]));
+console.log('markdown', remark().stringify(ast.children[2]));
 
 // Or without language:
-console.log(remark().stringify(ast.children[2]));
+console.log(remark().stringify(ast.children[3]));
 
 // Log something which is never captured:
 function neverCalled() {

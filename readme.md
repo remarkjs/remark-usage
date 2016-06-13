@@ -1,10 +1,12 @@
-# remark-usage [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# remark-usage [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status] [![Chat][chat-badge]][chat]
 
-Add a [usage][] example to a README.
+<!--lint disable heading-increment list-item-spacing-->
+
+Add a [usage][] example to a README with [**remark**][remark].
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install remark-usage
@@ -34,7 +36,7 @@ var ast = remark().use(usage).parse(readme);
 Log something with a language flag:
 
 ```markdown
-Add a [usage][] example to a README.
+Add a [usage][] example to a README with [**remark**][remark].
 ```
 
 Or without language:
@@ -67,7 +69,7 @@ Removes the current content between the heading containing the text “usage”,
 and the next heading of the same (or higher) depth, and replaces it with
 the example.
 
-The example is run as JavaScript. Line comments are parsed as Markdown.
+The example is run as JavaScript.  Line comments are parsed as Markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
 values (optionally with a language flag).
 
@@ -76,25 +78,22 @@ above [Usage][] section.
 
 *   Operate this from an npm package, or provide a `cwd`;
 *   Make sure no side effects occur when running `example.js`!
-*   Don’t do weird things. This is mostly regexes!
+*   Don’t do weird things.  This is mostly regexes!
 
-Options:
+###### `options`
 
-*   `cwd` (`string?`) — Path to a directory containing a node module. Used
-    to infer `name`, `main`, and `example`;
-
-*   `name` (`string?`) — Name of the module. Inferred from `package.json`s
-    `name` property. Used to rewrite `require('./index.js')` to
+*   `cwd` (`string?`) — Path to a directory containing a node module.
+    Used to infer `name`, `main`, and `example`;
+*   `name` (`string?`) — Name of the module.  Inferred from `package.json`s
+    `name` property.  Used to rewrite `require('./index.js')` to
     `require('some-name')`;
-
-*   `main` (`string?`) — Path to the main script. Resolved from `package.json`s
-    `main` property (or `index.js`). Used to rewrite `require('./index.js')`
+*   `main` (`string?`) — Path to the main script.  Resolved from
+    `package.json`s `main` property (or `index.js`).  Used to rewrite
+    `require('./index.js')`
     to `require('some-name')`.
-
-*   `example` (`string?`) — Path to the example script. **remark-usage** checks
-    for `docs/example.js`, `doc/example.js`, `examples/index.js`,
+*   `example` (`string?`) — Path to the example script.  **remark-usage**
+    checks for `docs/example.js`, `doc/example.js`, `examples/index.js`,
     `example/index.js`, and `example.js`.
-
 *   `heading` (`string?`, default: `"usage"`) — Heading to look for,
     wrapped in `new RegExp('^(' + value + ')$', 'i');`.
 
@@ -104,19 +103,25 @@ Options:
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/remark-usage.svg
+[build-badge]: https://img.shields.io/travis/wooorm/remark-usage.svg
 
-[travis]: https://travis-ci.org/wooorm/remark-usage
+[build-status]: https://travis-ci.org/wooorm/remark-usage
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg
 
-[codecov]: https://codecov.io/github/wooorm/remark-usage
+[coverage-status]: https://codecov.io/github/wooorm/remark-usage
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
+
+[chat]: https://gitter.im/wooorm/remark
 
 [license]: LICENSE
 
 [author]: http://wooorm.com
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[remark]: https://github.com/wooorm/remark
 
 [usage]: #usage
 
