@@ -1,6 +1,6 @@
 {
   "name": "remark-usage",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0",
   "description": "Add a usage example to your README",
   "license": "MIT",
   "keywords": [

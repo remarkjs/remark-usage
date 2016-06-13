@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+4.0.0 / 2016-06-13
+==================
+
+*   Update `readme.md` ([`b0d84c7`](https://github.com/wooorm/remark-usage/commit/b0d84c7))
+*   Update for changes in remark@5.0.0 ([`27e38e6`](https://github.com/wooorm/remark-usage/commit/27e38e6))
+
 3.0.0 / 2016-02-14
 ==================
 
