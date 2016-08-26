@@ -17,7 +17,7 @@ console.log(remark().stringify(ast.children[3]));
 
 // Log something which is never captured:
 function neverCalled() {
-    console.log('javascript', 'alert("test")');
+  console.log('javascript', 'alert("test")');
 }
 
 // Log something which isn’t captured because it’s not a string.

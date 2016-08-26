@@ -1,7 +1,5 @@
 # remark-usage [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status] [![Chat][chat-badge]][chat]
 
-<!--lint disable heading-increment list-item-spacing-->
-
 Add a [usage][] example to a README with [**remark**][remark].
 
 ## Installation
@@ -11,8 +9,6 @@ Add a [usage][] example to a README with [**remark**][remark].
 ```bash
 npm install remark-usage
 ```
-
-<!--lint disable code-block-style-->
 
 ## Usage
 
@@ -36,18 +32,20 @@ var ast = remark().use(usage).parse(readme);
 Log something with a language flag:
 
 ```markdown
-Add a [usage][] example to a README with [**remark**][remark].
+## Installation
 ```
 
 Or without language:
 
-    ## Installation
+```
+[npm][]:
+```
 
 Log something which is never captured:
 
 ```javascript
 function neverCalled() {
-    console.log('javascript', 'alert("test")');
+  console.log('javascript', 'alert("test")');
 }
 ```
 

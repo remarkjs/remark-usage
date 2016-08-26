@@ -9,10 +9,7 @@
     "plain",
     "text"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wooorm/remark-usage.git"
-  },
+  "repository": "https://github.com/wooorm/remark-usage",
   "bugs": "https://github.com/wooorm/remark-usage/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
@@ -23,33 +20,53 @@
   ],
   "dependencies": {
     "cept": "^1.0.0",
-    "remark": "^5.0.0",
     "mdast-util-heading-range": "^2.0.0",
     "require-uncached": "^1.0.2",
     "trim-trailing-lines": "^1.0.0",
     "unquote": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^2.0.0",
-    "istanbul": "^0.4.0",
-    "jscs": "^3.0.0",
-    "jscs-jsdoc": "^2.0.0",
-    "remark-cli": "^1.0.0",
-    "remark-comment-config": "^4.0.0",
-    "remark-github": "^5.0.0",
-    "remark-lint": "^4.0.0",
-    "remark-slug": "^4.1.1",
-    "remark-validate-links": "^4.0.0",
-    "tape": "^4.0.0"
+    "is-hidden": "^1.0.1",
+    "negate": "^1.0.0",
+    "nyc": "^8.1.0",
+    "remark": "^6.0.0",
+    "remark-cli": "^2.0.0",
+    "remark-preset-wooorm": "^1.0.0",
+    "tape": "^4.0.0",
+    "xo": "^0.16.0"
   },
   "scripts": {
-    "build-md": "remark . --quiet --frail",
+    "build-md": "remark *.md --quiet --frail",
     "build": "npm run build-md",
-    "lint-api": "eslint .",
-    "lint-style": "jscs --reporter inline .",
-    "lint": "npm run lint-api && npm run lint-style",
-    "test-api": "node test/index.js",
-    "test-coverage": "istanbul cover test/index.js",
+    "lint": "xo",
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test/index.js",
     "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "max-lines": "off",
+      "no-cond-assign": "off"
+    },
+    "ignore": [
+      "example.js"
+    ]
+  },
+  "remarkConfig": {
+    "output": true,
+    "presets": "wooorm",
+    "plugins": {
+      "./": null,
+      "lint": {
+        "fenced-code-flag": false
+      }
+    }
   }
 }
