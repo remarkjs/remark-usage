@@ -28,12 +28,12 @@
   "devDependencies": {
     "is-hidden": "^1.0.1",
     "negate": "^1.0.0",
-    "nyc": "^8.1.0",
+    "nyc": "^10.0.0",
     "remark": "^6.0.0",
     "remark-cli": "^2.0.0",
     "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.0.0",
-    "xo": "^0.16.0"
+    "xo": "^0.17.1"
   },
   "scripts": {
     "build-md": "remark *.md --quiet --frail",
@@ -53,7 +53,8 @@
     "space": true,
     "rules": {
       "max-lines": "off",
-      "no-cond-assign": "off"
+      "no-cond-assign": "off",
+      "import/no-dynamic-require": "off"
     },
     "ignore": [
       "example.js"
