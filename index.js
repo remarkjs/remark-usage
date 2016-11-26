@@ -1,11 +1,3 @@
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer
- * @license MIT
- * @module remark:usage
- * @fileoverview Add a usage example to your README.
- */
-
 'use strict';
 
 /* Dependencies. */
@@ -44,14 +36,7 @@ var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
 /* Constants. */
 var DEFAULT_HEADING = 'usage';
 
-/**
- * Post-process the example document.
- *
- * @param {string} value - Content to process.
- * @param {Object} logs - List of logs.
- * @param {Object} options - Configuration.
- * @return {Array.<Node>} - List of mdast nodes.
- */
+/* Post-process the example document. */
 function postprocess(value, logs, options, processor) {
   var tokens = [];
   var start = 0;
@@ -129,13 +114,7 @@ function postprocess(value, logs, options, processor) {
   return markdown;
 }
 
-/**
- * Adds an npm version badge to the main heading,
- * when available.
- *
- * @param {Unified} processor - Instance
- * @param {Object?} options - Configuration.
- */
+/* Update the example section. */
 function attacher(processor, options) {
   var settings = {};
   var pack;
@@ -191,22 +170,13 @@ function attacher(processor, options) {
   };
 }
 
-/**
- * Construct a transformer based on `options`.
- *
- * @param {Object} options - Configuration.
- * @return {function(node)} - Bound heading-range callback.
- */
+/* Construct a transformer based on `options`. */
 function runFactory(options, processor) {
-  /**
-   * Adds an example section based on a valid example
-   * JavaScript document to a `Usage` section.
-   *
-   * @param {Node} start - Starting heading.
-   * @param {Array.<Node>} nodes - Content.
-   * @param {Node} end - Ending heading.
-   */
-  return function (start, nodes, end) {
+  return run;
+
+  /* Add an example section based on a valid example
+   * JavaScript document to a `Usage` section. */
+  function run(start, nodes, end) {
     var logs = {};
     var example;
     var source;
@@ -264,18 +234,12 @@ function runFactory(options, processor) {
       postprocess(source, logs, options, processor),
       end
     );
-  };
+  }
 }
 
-/**
- * Transform a script into an intermediate nodes,
+/* Transform a script into an intermediate nodes,
  * removes the IDs from `console.log` invocations,
- * and resolves the main `require` call.
- *
- * @param {string} source - Scripts source.
- * @param {Object} options - Configuration.
- * @return {Array.<Object>} - List of tokens.
- */
+ * and resolves the main `require` call. */
 function script(source, options) {
   var tokens;
 

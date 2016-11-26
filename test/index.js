@@ -1,14 +1,5 @@
-/**
- * @author Titus Wormer
- * @copyright 2015 Titus Wormer
- * @license MIT
- * @module remark:usage:test
- * @fileoverview Test suite for remark-usage.
- */
-
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var test = require('tape');
@@ -17,11 +8,9 @@ var hidden = require('is-hidden');
 var negate = require('negate');
 var usage = require('..');
 
-/* Methods. */
 var read = fs.readFileSync;
 var exists = fs.existsSync;
 
-/* Tests. */
 test('remark-usage()', function (t) {
   t.equal(typeof usage, 'function', 'should be a function');
 
@@ -32,7 +21,6 @@ test('remark-usage()', function (t) {
   t.end();
 });
 
-/* Constants. */
 var ROOT = path.join(__dirname, 'fixtures');
 var fixtures = fs.readdirSync(ROOT).filter(negate(hidden));
 
