@@ -11,11 +11,11 @@ var usage = require('..');
 var read = fs.readFileSync;
 var exists = fs.existsSync;
 
-test('remark-usage()', function (t) {
+test('usage()', function (t) {
   t.equal(typeof usage, 'function', 'should be a function');
 
   t.doesNotThrow(function () {
-    usage(remark);
+    usage.call(remark);
   }, 'should not throw if not passed options');
 
   t.end();
@@ -43,7 +43,7 @@ test('Fixtures', function (t) {
     fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : '';
 
     try {
-      result = remark().use(usage, config).process(input).toString();
+      result = remark().use(usage, config).processSync(input).toString();
 
       t.equal(result, output, 'should work on `' + fixture + '`');
     } catch (err) {

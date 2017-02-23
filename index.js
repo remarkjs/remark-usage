@@ -8,9 +8,11 @@ var heading = require('mdast-util-heading-range');
 var trimTrailingLines = require('trim-trailing-lines');
 var unquote = require('unquote');
 var cept = require('cept');
+var unified = require('unified');
+var markdown = require('remark-parse');
 
 /* Expose `attacher`. */
-module.exports = attacher;
+module.exports = usage;
 
 /* Methods. */
 var exists = fs.existsSync;
@@ -18,6 +20,8 @@ var read = fs.readFileSync;
 var write = fs.writeFileSync;
 var remove = fs.unlinkSync;
 var resolve = path.resolve;
+
+var processor = unified().use(markdown);
 
 /* List of locations to look for an example. */
 var EXAMPLES = [
@@ -37,7 +41,7 @@ var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/;
 var DEFAULT_HEADING = 'usage';
 
 /* Post-process the example document. */
-function postprocess(value, logs, options, processor) {
+function postprocess(value, logs, options) {
   var tokens = [];
   var start = 0;
   var match;
@@ -84,7 +88,7 @@ function postprocess(value, logs, options, processor) {
     var lang;
 
     if (token.type === 'markdown') {
-      markdown = markdown.concat(parse(token.value, processor));
+      markdown = markdown.concat(parse(token.value));
     } else {
       prev = markdown[markdown.length - 1];
       lang = 'lang' in token ? token.lang : token.type;
@@ -115,7 +119,7 @@ function postprocess(value, logs, options, processor) {
 }
 
 /* Update the example section. */
-function attacher(processor, options) {
+function usage(options) {
   var settings = {};
   var pack;
   var main;
@@ -166,12 +170,12 @@ function attacher(processor, options) {
   header = toExpression(options.heading || DEFAULT_HEADING);
 
   return function (tree) {
-    heading(tree, header, runFactory(settings, processor));
+    heading(tree, header, runFactory(settings));
   };
 }
 
 /* Construct a transformer based on `options`. */
-function runFactory(options, processor) {
+function runFactory(options) {
   return run;
 
   /* Add an example section based on a valid example
@@ -231,7 +235,7 @@ function runFactory(options, processor) {
 
     /* Add markdown. */
     return [start].concat(
-      postprocess(source, logs, options, processor),
+      postprocess(source, logs, options),
       end
     );
   }
@@ -294,7 +298,7 @@ function preprocess(value) {
 
 /* Parse markdown into nodes, without positional
  * information. */
-function parse(value, processor) {
+function parse(value) {
   return processor.parse(value, {position: false}).children;
 }
 

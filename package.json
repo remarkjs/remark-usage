@@ -21,22 +21,24 @@
   "dependencies": {
     "cept": "^1.0.0",
     "mdast-util-heading-range": "^2.0.0",
+    "remark-parse": "^3.0.0",
     "require-uncached": "^1.0.2",
     "trim-trailing-lines": "^1.0.0",
+    "unified": "^6.0.0",
     "unquote": "^1.1.0"
   },
   "devDependencies": {
     "is-hidden": "^1.0.1",
     "negate": "^1.0.0",
     "nyc": "^10.0.0",
-    "remark": "^6.0.0",
-    "remark-cli": "^2.0.0",
-    "remark-preset-wooorm": "^1.0.0",
+    "remark": "^7.0.0",
+    "remark-cli": "^3.0.0",
+    "remark-preset-wooorm": "^2.0.0",
     "tape": "^4.0.0",
     "xo": "^0.17.1"
   },
   "scripts": {
-    "build-md": "remark *.md --quiet --frail",
+    "build-md": "remark *.md -qfo",
     "build": "npm run build-md",
     "lint": "xo",
     "test-api": "node test",
@@ -62,12 +64,10 @@
   },
   "remarkConfig": {
     "output": true,
-    "presets": "wooorm",
-    "plugins": {
-      "./": null,
-      "lint": {
-        "fenced-code-flag": false
-      }
-    }
+    "plugins": [
+      "preset-wooorm",
+      ["remark-lint-fenced-code-flag", false],
+      "./"
+    ]
   }
 }
