@@ -203,7 +203,7 @@ function runFactory(options) {
 
     write(tmp, source, 'utf-8');
 
-    /* to do: better tmp file management. */
+    /* To Do: better tmp file management. */
     stop = cept(console, 'log', function (id, lang, value) {
       if (!value) {
         value = lang;
