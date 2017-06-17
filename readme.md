@@ -74,26 +74,38 @@ values (optionally with a language flag).
 It’s easiest to check out and compare [`example.js`][example-js] with the
 above [Usage][] section.
 
-*   Operate this from an npm package, or provide a `cwd`;
-*   Make sure no side effects occur when running `example.js`!
-*   Don’t do weird things.  This is mostly regexes!
+*   Operate this from an npm package, or provide a `cwd`
+*   Make sure no side effects occur when running `example.js`
+*   Don’t do weird things.  This is mostly regexes
 
-###### `options`
+##### `options`
 
-*   `cwd` (`string?`) — Path to a directory containing a node module.
-    Used to infer `name`, `main`, and `example`;
-*   `name` (`string?`) — Name of the module.  Inferred from `package.json`s
-    `name` property.  Used to rewrite `require('./index.js')` to
-    `require('some-name')`;
-*   `main` (`string?`) — Path to the main script.  Resolved from
-    `package.json`s `main` property (or `index.js`).  Used to rewrite
-    `require('./index.js')`
-    to `require('some-name')`.
-*   `example` (`string?`) — Path to the example script.  **remark-usage**
-    checks for `docs/example.js`, `doc/example.js`, `examples/index.js`,
-    `example/index.js`, and `example.js`.
-*   `heading` (`string?`, default: `"usage"`) — Heading to look for,
-    wrapped in `new RegExp('^(' + value + ')$', 'i');`.
+###### `options.cwd`
+
+`string?` — Path to a directory containing a node module.  Used to infer `name`,
+`main`, and `example`.
+
+###### `options.name`
+
+`string?` — Name of the module, inferred from `package.json`s `name` property.
+Used to rewrite `require('./index.js')` to `require('some-name')`.
+
+###### `options.main`
+
+`string?` — Path to the main script.  Resolved from `package.json`s `main`
+property (or `index.js`).  Used to rewrite `require('./index.js')` to
+`require('some-name')`.
+
+###### `options.example`
+
+`string?` — Path to the example script.  `remark-usage` checks for
+`docs/example.js`, `doc/example.js`, `examples/index.js`, `example/index.js`,
+and `example.js`.
+
+###### `options.heading`
+
+`string?`, default: `'usage'` — Heading to look for, wrapped in
+`new RegExp('^(' + value + ')$', 'i');`.
 
 ## License
 
