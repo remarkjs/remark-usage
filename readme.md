@@ -113,17 +113,17 @@ and `example.js`.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/remark-usage.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-usage.svg
 
-[build-status]: https://travis-ci.org/wooorm/remark-usage
+[build-status]: https://travis-ci.org/remarkjs/remark-usage
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/remark-usage.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/remarkjs/remark-usage.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/remark-usage
+[coverage-status]: https://codecov.io/github/remarkjs/remark-usage
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/remark.svg
+[chat-badge]: https://img.shields.io/gitter/room/remarkjs/Lobby.svg
 
-[chat]: https://gitter.im/wooorm/remark
+[chat]: https://gitter.im/remarkjs/Lobby
 
 [license]: LICENSE
 
@@ -131,7 +131,7 @@ and `example.js`.
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[remark]: https://github.com/wooorm/remark
+[remark]: https://github.com/remarkjs/remark
 
 [usage]: #usage
 

@@ -9,8 +9,8 @@
     "plain",
     "text"
   ],
-  "repository": "https://github.com/wooorm/remark-usage",
-  "bugs": "https://github.com/wooorm/remark-usage/issues",
+  "repository": "remarkjs/remark-usage",
+  "bugs": "https://github.com/remarkjs/remark-usage/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
