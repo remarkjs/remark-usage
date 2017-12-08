@@ -107,6 +107,13 @@ and `example.js`.
 `string?`, default: `'usage'` — Heading to look for, wrapped in
 `new RegExp('^(' + value + ')$', 'i');`.
 
+## Contribute
+
+See [`contribute.md` in `remarkjs/remarkj`][contribute] for ways to get started.
+
+This organisation has a [Code of Conduct][coc].  By interacting with this
+repository, organisation, or community you agree to abide by its terms.
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -136,3 +143,7 @@ and `example.js`.
 [usage]: #usage
 
 [example-js]: example.js
+
+[contribute]: https://github.com/remarkjs/remark/blob/master/contributing.md
+
+[coc]: https://github.com/remarkjs/remark/blob/master/code-of-conduct.md
