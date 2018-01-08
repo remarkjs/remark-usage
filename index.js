@@ -78,7 +78,7 @@ function postprocess(value, logs, options) {
   }
 
   if (start < value.length) {
-    tokens = tokens.concat(script(value.slice(start)));
+    tokens = tokens.concat(script(value.slice(start), options));
   }
 
   markdown = [];
