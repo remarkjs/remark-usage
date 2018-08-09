@@ -52,8 +52,9 @@ function postprocess(value, logs, options) {
   var markdown;
 
   EXPRESSION_LOG.lastIndex = 0;
+  match = EXPRESSION_LOG.exec(value);
 
-  while (match = EXPRESSION_LOG.exec(value)) {
+  while (match) {
     end = EXPRESSION_LOG.lastIndex;
 
     content = value.slice(start, end - match[0].length);
@@ -75,6 +76,7 @@ function postprocess(value, logs, options) {
     }
 
     start = end;
+    match = EXPRESSION_LOG.exec(value);
   }
 
   if (start < value.length) {
