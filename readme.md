@@ -17,16 +17,18 @@ This section is rendered by this module from [example.js][example-js].
 Dependencies:
 
 ```javascript
-var fs = require('fs');
-var remark = require('remark');
-var usage = require('remark-usage'); // This is changed from `./index.js` to `remark-usage`
+var fs = require('fs')
+var remark = require('remark')
+var usage = require('remark-usage') // This is changed from `./index.js` to `remark-usage`
 ```
 
 Read and parse `readme.md`:
 
 ```javascript
-var readme = fs.readFileSync('readme.md', 'utf-8');
-var ast = remark().use(usage).parse(readme);
+var readme = fs.readFileSync('readme.md', 'utf-8')
+var ast = remark()
+  .use(usage)
+  .parse(readme)
 ```
 
 Log something with a language flag:
@@ -45,14 +47,14 @@ Log something which is never captured:
 
 ```javascript
 function neverCalled() {
-  console.log('javascript', 'alert("test")');
+  console.log('javascript', 'alert("test")')
 }
 ```
 
 Log something which isn’t captured because it’s not a string.
 
 ```javascript
-console.log(this);
+console.log(this)
 ```
 
 ## API
