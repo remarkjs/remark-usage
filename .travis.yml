@@ -3,12 +3,3 @@ node_js:
 - lts/boron
 - node
 after_script: bash <(curl -s https://codecov.io/bash)
-deploy:
-  provider: npm
-  skip_cleanup: true
-  email: tituswormer@gmail.com
-  api_key:
-    secure: eIVmyU17TBnm7xWUGYcSLxU2Mz3XyryVz1YcRFBSWBJPvrc3bFuuXsJpk4zuPUrRrygumYtxTfcSbnAhnmcMO/NUbeWZyl62tR6CAxSVXI3tGdrp06LP8LOnBN4Sz99aPyuwbReuse6gEXAjD06kNVCgozFfmFW4y4fXFeowkSM=
-  on:
-    tags: true
-    node: '9.0'
