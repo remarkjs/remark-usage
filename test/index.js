@@ -49,14 +49,14 @@ test('Fixtures', function(t) {
         .toString()
 
       t.equal(result, output, 'should work on `' + fixture + '`')
-    } catch (err) {
+    } catch (error) {
       if (!fail) {
-        throw err
+        throw error
       }
 
       fail = new RegExp(fail.replace(/-/, ' '), 'i')
 
-      t.equal(fail.test(err), true, 'should fail on `' + fixture + '`')
+      t.equal(fail.test(error), true, 'should fail on `' + fixture + '`')
     }
   })
 

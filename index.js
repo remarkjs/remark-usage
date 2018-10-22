@@ -139,7 +139,7 @@ function usage(options) {
 
   try {
     pack = require(resolve(cwd, 'package.json'))
-  } catch (err) {
+  } catch (error) {
     pack = {}
   }
 
@@ -217,15 +217,15 @@ function runFactory(options) {
 
     try {
       uncached(tmp)
-    } catch (err) {
-      err.message =
+    } catch (error) {
+      error.message =
         'Invalid example `' +
         example +
         '`. ' +
         'Ensure example is a valid JavaScript file:\n\n' +
-        err.message
+        error.message
 
-      throw err
+      throw error
     } finally {
       stop()
 
