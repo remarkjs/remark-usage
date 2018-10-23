@@ -9,6 +9,7 @@ var unquote = require('unquote')
 var cept = require('cept')
 var unified = require('unified')
 var markdown = require('remark-parse')
+var resolveFrom = require('resolve-from')
 
 module.exports = usage
 
@@ -145,10 +146,7 @@ function usage(options) {
 
   name = options.name || pack.name || null
 
-  main = options.main
-  main = main
-    ? require.resolve(resolve(cwd, main))
-    : resolve(cwd, pack.main || 'index.js')
+  main = resolve(cwd, options.main || pack.main || 'index.js')
 
   example = options.example
 
@@ -275,7 +273,10 @@ function script(source, options) {
   return tokens
 
   function replace($0, $1, $2, $3) {
-    var filepath = resolve(options.example, '../', unquote($2))
+    var filepath = resolveFrom.silent(
+      path.dirname(options.example),
+      unquote($2)
+    )
     var quote
 
     if (options.main === filepath && options.name) {
