@@ -3,17 +3,18 @@
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
-[![Chat][chat-badge]][chat]
+[![Size][size-badge]][size]
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
-Add a [usage][] example to a readme with [**remark**][remark].
+[**remark**][remark] plugin to add a [usage][] example to a readme.
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install remark-usage
 ```
 
@@ -41,13 +42,13 @@ var ast = remark()
 Log something with a language flag:
 
 ```markdown
-Add a [usage][] example to a readme with [**remark**][remark].
+[**remark**][remark] plugin to add a [usage][] example to a readme.
 ```
 
 Or without language:
 
 ```
-## Installation
+## Install
 ```
 
 Log something which is never captured:
@@ -68,61 +69,66 @@ console.log(this)
 
 <!--lint enable code-block-style-->
 
-### `remark.use(usage[, options])`
+### `remark().use(usage[, options])`
 
-Adds `example.js` to the `Usage` section in a `readme.md`.
+Add `example.js` to the `Usage` section in a readme.
 
-Removes the current content between the heading containing the text “usage”,
-and the next heading of the same (or higher) depth, and replaces it with
-the example.
+Removes the current content between the heading containing the text “usage”, and
+the next heading of the same (or higher) depth, and replaces it with the
+example.
 
-The example is run as JavaScript.  Line comments are parsed as Markdown.
+The example is run as JavaScript.
+Line comments are parsed as Markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
 values (optionally with a language flag).
 
-It’s easiest to check out and compare [`example.js`][example-js] with the
-above [Usage][] section.
+It’s easiest to check out and compare [`example.js`][example-js] with the above
+[Usage][] section.
 
 *   Operate this from an npm package, or provide a `cwd`
 *   Make sure no side effects occur when running `example.js`
-*   Don’t do weird things.  This is mostly regexes
+*   Don’t do weird things.
+    This is mostly regexes
 
 ##### `options`
 
 ###### `options.cwd`
 
-`string?` — Path to a directory containing a node module.  Used to infer `name`,
-`main`, and `example`.
+Path to a directory containing a node module (`string?`).
+Used to infer `name`, `main`, and `example`.
 
 ###### `options.name`
 
-`string?` — Name of the module, inferred from `package.json`s `name` property.
-Used to rewrite `require('./index.js')` to `require('some-name')`.
+Name of the module (`string?`).
+Inferred from `package.json`s `name` property.
+Used to rewrite `require('.')` to `require('some-name')`.
 
 ###### `options.main`
 
-`string?` — Path to the main script.  Resolved from `package.json`s `main`
-property (or `index.js`).  Used to rewrite `require('./index.js')` to
-`require('some-name')`.
+Path to the main script (`string?`).
+Resolved from `package.json`s `main` property (or `index.js`).
+Used to rewrite `require('./index.js')` to `require('some-name')`.
 
 ###### `options.example`
 
-`string?` — Path to the example script.  `remark-usage` checks for
-`docs/example.js`, `doc/example.js`, `examples/index.js`, `example/index.js`,
-and `example.js`.
+Path to the example script (`string?`).
+`remark-usage` checks for `docs/example.js`, `doc/example.js`,
+`examples/index.js`, `example/index.js`, and `example.js`.
 
 ###### `options.heading`
 
-`string?`, default: `'usage'` — Heading to look for, wrapped in
-`new RegExp('^(' + value + ')$', 'i');`.
+Heading to look for (`string?`, default: `'usage'`).
+Wrapped in `new RegExp('^(' + value + ')$', 'i');`.
 
 ## Contribute
 
-See [`contributing.md` in `remarkjs/remark`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -130,7 +136,7 @@ repository, organisation, or community you agree to abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/remarkjs/remark-usage.svg
+[build-badge]: https://img.shields.io/travis/remarkjs/remark-usage/master.svg
 
 [build]: https://travis-ci.org/remarkjs/remark-usage
 
@@ -142,9 +148,9 @@ repository, organisation, or community you agree to abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/remark-usage
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-usage.svg
 
-[chat]: https://spectrum.chat/unified/remark
+[size]: https://bundlephobia.com/result?p=remark-usage
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -152,18 +158,26 @@ repository, organisation, or community you agree to abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+
+[chat]: https://spectrum.chat/unified/remark
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[health]: https://github.com/remarkjs/.github
+
+[contributing]: https://github.com/remarkjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/remarkjs/.github/blob/master/support.md
+
+[coc]: https://github.com/remarkjs/.github/blob/master/code-of-conduct.md
+
 [license]: license
 
 [author]: https://wooorm.com
-
-[npm]: https://docs.npmjs.com/cli/install
 
 [remark]: https://github.com/remarkjs/remark
 
 [usage]: #usage
 
 [example-js]: example.js
-
-[contributing]: https://github.com/remarkjs/remark/blob/master/contributing.md
-
-[coc]: https://github.com/remarkjs/remark/blob/master/code-of-conduct.md
