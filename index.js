@@ -21,7 +21,7 @@ var resolve = path.resolve
 
 var processor = unified().use(markdown)
 
-/* List of locations to look for an example. */
+// List of locations to look for an example.
 var EXAMPLES = [
   'docs/example.js',
   'doc/example.js',
@@ -30,15 +30,15 @@ var EXAMPLES = [
   'example.js'
 ]
 
-/* Expressions. */
+// Expressions.
 var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g
 var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g
 var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/
 
-/* Constants. */
+// Constants.
 var DEFAULT_HEADING = 'usage'
 
-/* Post-process the example document. */
+// Post-process the example document.
 function postprocess(value, logs, options) {
   var tokens = []
   var start = 0
@@ -122,7 +122,7 @@ function postprocess(value, logs, options) {
   }
 }
 
-/* Update the example section. */
+// Update the example section.
 function usage(options) {
   var settings = {}
   var pack
@@ -181,12 +181,12 @@ function usage(options) {
   }
 }
 
-/* Construct a transformer based on `options`. */
+// Construct a transformer based on `options`.
 function runFactory(options) {
   return run
 
-  /* Add an example section based on a valid example
-   * JavaScript document to a `Usage` section. */
+  // Add an example section based on a valid example JavaScript document to a
+  // `Usage` section.
   function run(start, nodes, end) {
     var logs = {}
     var example = options.example
@@ -210,7 +210,7 @@ function runFactory(options) {
 
     write(tmp, source, 'utf-8')
 
-    /* To Do: better tmp file management. */
+    // To Do: better tmp file management.
     stop = cept(console, 'log', intercept)
 
     try {
@@ -233,7 +233,7 @@ function runFactory(options) {
       }
     }
 
-    /* Add markdown. */
+    // Add Markdown.
     return [start].concat(postprocess(source, logs, options), end)
 
     function intercept(id, lang, value) {
@@ -249,23 +249,19 @@ function runFactory(options) {
   }
 }
 
-/* Transform a script into an intermediate nodes,
- * removes the IDs from `console.log` invocations,
- * and resolves the main `require` call. */
+// Transform a script into an intermediate nodes, removes the IDs from
+// `console.log` calls, and resolves the main `require` call.
 function script(source, options) {
   var tokens
 
-  /* Make sure the require to the main module
-   * is showed as if it was a require from
-   * `./node_modules`.
-   *
-   * For example, when the example file
-   * (`test/example.js`) requires the main file (as
-   * listed in `test/package.json`, `main: "module.js"`)
-   * as `./module`, it is replaced with `test`. */
+  // Make sure the require to the main module is shown as if it was a require
+  // from `./node_modules`.
+  // For example, when the example file (`test/example.js`) requires the main
+  // file (as listed in `test/package.json`, `main: "module.js"`) as `./module`,
+  // it is replaced with `test`.
   source = source.replace(EXPRESSION_REQUIRE, replace)
 
-  /* Transform comments into markdown: */
+  // Transform comments into markdown:
   tokens = []
 
   source.split('\n').forEach(each)
@@ -280,7 +276,7 @@ function script(source, options) {
     var quote
 
     if (options.main === filepath && options.name) {
-      /* Honour quote style. */
+      // Honour quote style.
       quote = $2.charAt(0)
 
       return $1 + quote + options.name + quote + $3
@@ -299,7 +295,7 @@ function script(source, options) {
   }
 }
 
-/* Preprocess `value` to add IDs to `console.log` invocations. */
+// Preprocess `value` to add IDs to `console.log` invocations.
 function preprocess(value) {
   var index = 0
 
@@ -311,18 +307,17 @@ function preprocess(value) {
   }
 }
 
-/* Parse markdown into nodes, without positional
- * information. */
+// Parse Markdown into nodes, without positional information.
 function parse(value) {
   return processor.parse(value, {position: false}).children
 }
 
-/* Transform a log into an mdast `code` node. */
+// Transform a log into an mdast `code` node.
 function log(info) {
   return {type: 'code', lang: info.lang, value: info.value}
 }
 
-/* Transform a string into an applicable expression. */
+// Transform a string into an applicable expression.
 function toExpression(value) {
   return new RegExp('^(' + value + ')$', 'i')
 }
