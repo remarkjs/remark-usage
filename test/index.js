@@ -21,12 +21,12 @@ test('usage()', function(t) {
   t.end()
 })
 
-var ROOT = path.join(__dirname, 'fixtures')
-var fixtures = fs.readdirSync(ROOT).filter(negate(hidden))
+var root = path.join(__dirname, 'fixtures')
+var fixtures = fs.readdirSync(root).filter(negate(hidden))
 
 test('Fixtures', function(t) {
   fixtures.forEach(function(fixture) {
-    var filepath = ROOT + '/' + fixture
+    var filepath = root + '/' + fixture
     var config = filepath + '/config.json'
     var output = filepath + '/output.md'
     var input

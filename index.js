@@ -22,7 +22,7 @@ var resolve = path.resolve
 var processor = unified().use(markdown)
 
 // List of locations to look for an example.
-var EXAMPLES = [
+var examples = [
   'docs/example.js',
   'doc/example.js',
   'examples',
@@ -31,12 +31,12 @@ var EXAMPLES = [
 ]
 
 // Expressions.
-var EXPRESSION_LOG = /(console\.log\()(.+)(\);?)/g
-var EXPRESSION_REQUIRE = /(require\()(.+)(\);?)/g
-var EXPRESSION_COMMENT = /^(\s*)(\/\/)(\s*)(.+)/
+var expressionLog = /(console\.log\()(.+)(\);?)/g
+var expressionRequire = /(require\()(.+)(\);?)/g
+var expressionComment = /^(\s*)(\/\/)(\s*)(.+)/
 
 // Constants.
-var DEFAULT_HEADING = 'usage'
+var defaultHeading = 'usage'
 
 // Post-process the example document.
 function postprocess(value, logs, options) {
@@ -49,11 +49,11 @@ function postprocess(value, logs, options) {
   var end
   var markdown
 
-  EXPRESSION_LOG.lastIndex = 0
-  match = EXPRESSION_LOG.exec(value)
+  expressionLog.lastIndex = 0
+  match = expressionLog.exec(value)
 
   while (match) {
-    end = EXPRESSION_LOG.lastIndex
+    end = expressionLog.lastIndex
 
     content = value.slice(start, end - match[0].length)
 
@@ -74,7 +74,7 @@ function postprocess(value, logs, options) {
     }
 
     start = end
-    match = EXPRESSION_LOG.exec(value)
+    match = expressionLog.exec(value)
   }
 
   if (start < value.length) {
@@ -153,7 +153,7 @@ function usage(options) {
   if (example) {
     example = require.resolve(resolve(cwd, example))
   } else {
-    EXAMPLES.some(some)
+    examples.some(some)
   }
 
   settings.cwd = cwd
@@ -161,7 +161,7 @@ function usage(options) {
   settings.main = main
   settings.example = example
 
-  header = toExpression(options.heading || DEFAULT_HEADING)
+  header = toExpression(options.heading || defaultHeading)
 
   return transform
 
@@ -198,9 +198,8 @@ function runFactory(options) {
       throw new Error(
         'Missing example: `' +
           example +
-          '`. ' +
-          'Pass an `example` or use a file at: ' +
-          EXAMPLES.join(', ')
+          '`. Pass an `example` or use a file at: ' +
+          examples.join(', ')
       )
     }
 
@@ -259,7 +258,7 @@ function script(source, options) {
   // For example, when the example file (`test/example.js`) requires the main
   // file (as listed in `test/package.json`, `main: "module.js"`) as `./module`,
   // it is replaced with `test`.
-  source = source.replace(EXPRESSION_REQUIRE, replace)
+  source = source.replace(expressionRequire, replace)
 
   // Transform comments into markdown:
   tokens = []
@@ -286,7 +285,7 @@ function script(source, options) {
   }
 
   function each(line) {
-    var match = line.match(EXPRESSION_COMMENT)
+    var match = line.match(expressionComment)
 
     tokens.push({
       type: match ? 'markdown' : 'javascript',
@@ -299,7 +298,7 @@ function script(source, options) {
 function preprocess(value) {
   var index = 0
 
-  return value.replace(EXPRESSION_LOG, replace)
+  return value.replace(expressionLog, replace)
 
   function replace($0, $1, $2, $3) {
     index++

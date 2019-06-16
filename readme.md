@@ -7,7 +7,7 @@
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
 
-Add a [usage][] example to a README with [**remark**][remark].
+Add a [usage][] example to a readme with [**remark**][remark].
 
 ## Installation
 
@@ -41,7 +41,7 @@ var ast = remark()
 Log something with a language flag:
 
 ```markdown
-Add a [usage][] example to a README with [**remark**][remark].
+Add a [usage][] example to a readme with [**remark**][remark].
 ```
 
 Or without language:
