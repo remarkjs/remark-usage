@@ -90,6 +90,20 @@ It’s easiest to check out and compare [`example.js`][example-js] with the abov
 *   Don’t do weird things.
     This is mostly regexes
 
+You can ignore lines like so:
+
+```js
+// remark-usage-ignore-next
+var two = sum(1, 1)
+
+// remark-usage-ignore-next 3
+function sum(a, b) {
+  return a + b
+}
+```
+
+…if no `skip` is given, 1 line is skipped.
+
 ##### `options`
 
 ###### `options.cwd`
