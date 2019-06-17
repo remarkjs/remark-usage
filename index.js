@@ -33,7 +33,8 @@ var examples = [
 // Expressions.
 var expressionLog = /(console\.log\()(.+)(\);?)/g
 var expressionRequire = /(require\()(.+)(\);?)/g
-var expressionComment = /^(\s*)(\/\/)(\s*)(.+)/
+var expressionComment = /^(?:\s*)(?:\/\/)(?:\s*)(.+)/
+var expressionIgnore = /^remark-usage-ignore-next(?:(?:\s+)(\d+))?/
 
 // Constants.
 var defaultHeading = 'usage'
@@ -252,6 +253,11 @@ function runFactory(options) {
 // `console.log` calls, and resolves the main `require` call.
 function script(source, options) {
   var tokens
+  var lines
+  var index
+  var length
+  var line
+  var match
 
   // Make sure the require to the main module is shown as if it was a require
   // from `./node_modules`.
@@ -263,7 +269,27 @@ function script(source, options) {
   // Transform comments into markdown:
   tokens = []
 
-  source.split('\n').forEach(each)
+  lines = source.split('\n')
+  index = -1
+  length = lines.length
+
+  while (++index < length) {
+    line = lines[index]
+    match = line.match(expressionComment)
+
+    if (match) {
+      line = match[1]
+      match = line.match(expressionIgnore)
+
+      if (match) {
+        index += (match[1] !== undefined && parseInt(match[1], 10)) || 1
+      } else {
+        tokens.push({type: 'markdown', value: line})
+      }
+    } else {
+      tokens.push({type: 'javascript', value: line})
+    }
+  }
 
   return tokens
 
@@ -282,15 +308,6 @@ function script(source, options) {
     }
 
     return $0
-  }
-
-  function each(line) {
-    var match = line.match(expressionComment)
-
-    tokens.push({
-      type: match ? 'markdown' : 'javascript',
-      value: match ? match[4] : line
-    })
   }
 }
 
