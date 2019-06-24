@@ -18,7 +18,7 @@
 npm install remark-usage
 ```
 
-## Usage
+## Use
 
 > This section is rendered by this module from [`example.js`][example-js].
 > Turtles all the way down.  🐢🐢🐢
@@ -31,7 +31,7 @@ We’re documenting it with a readme file, [`example/readme.md`][example-md]:
 
 More than enough 🍰
 
-## Use
+## Usage
 
 ## License
 
@@ -213,7 +213,7 @@ abide by its terms.
 
 [file-cwd]: https://github.com/vfile/vfile#vfilecwd
 
-[usage]: #usage
+[usage]: #use
 
 [example-js]: example.js
 
