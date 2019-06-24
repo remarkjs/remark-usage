@@ -20,50 +20,74 @@ npm install remark-usage
 
 ## Usage
 
-This section is rendered by this module from [example.js][example-js].
+> This section is rendered by this module from [`example.js`][example-js].
+> Turtles all the way down.  🐢🐢🐢
 
-Dependencies:
-
-```javascript
-var fs = require('fs')
-var remark = require('remark')
-var usage = require('remark-usage') // This is changed from `./index.js` to `remark-usage`
-```
-
-Read and parse `readme.md`:
-
-```javascript
-var readme = fs.readFileSync('readme.md', 'utf-8')
-var ast = remark()
-  .use(usage)
-  .parse(readme)
-```
-
-Log something with a language flag:
+Say we are making a module that exports just enough Pi (3.14159).
+We’re documenting it with a readme file, [`example/readme.md`][example-md]:
 
 ```markdown
-[**remark**][remark] plugin to add a [usage][] example to a readme.
+# PI
+
+More than enough 🍰
+
+## Use
+
+## License
+
+MIT
 ```
 
-Or without language:
+…and an example script to document it [`example/example.js`][example-js-2]:
 
-```
-## Install
+```js
+// Load dependencies:
+var pi = require('.')
+
+// Logging `pi` yields:
+console.log('txt', pi)
 ```
 
-Log something which is never captured:
+…If we use `remark-usage`, we can generate the `Usage` section
 
 ```javascript
-function neverCalled() {
-  console.log('javascript', 'alert("test")')
-}
+var path = require('path')
+var vfile = require('to-vfile')
+var remark = require('remark')
+var usage = require('remark-usage')
+
+var file = vfile.readSync({path: 'readme.md', cwd: 'example'})
+
+var file = await remark()
+  .use(usage)
+  .process(file)
 ```
 
-Log something which isn’t captured because it’s not a string.
+Now, printing `file` (the newly generated readme) yields:
+
+````markdown
+# PI
+
+More than enough 🍰
+
+## Usage
+
+Load dependencies:
 
 ```javascript
-console.log(this)
+var pi = require('pi')
 ```
+
+Logging `pi` yields:
+
+```txt
+3.14159
+```
+
+## License
+
+MIT
+````
 
 ## API
 
@@ -77,7 +101,7 @@ Removes the current content between the heading containing the text “usage”,
 the next heading of the same (or higher) depth, and replaces it with the
 example.
 
-The example is run as JavaScript.
+The example is run in Node.
 Line comments are parsed as Markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
 values (optionally with a language flag).
@@ -85,10 +109,8 @@ values (optionally with a language flag).
 It’s easiest to check out and compare [`example.js`][example-js] with the above
 [Usage][] section.
 
-*   Operate this from an npm package, or provide a `cwd`
+*   Operate this from an npm package
 *   Make sure no side effects occur when running `example.js`
-*   Don’t do weird things.
-    This is mostly regexes
 
 You can ignore lines like so:
 
@@ -106,33 +128,30 @@ function sum(a, b) {
 
 ##### `options`
 
-###### `options.cwd`
-
-Path to a directory containing a node module (`string?`).
-Used to infer `name`, `main`, and `example`.
-
-###### `options.name`
-
-Name of the module (`string?`).
-Inferred from `package.json`s `name` property.
-Used to rewrite `require('.')` to `require('some-name')`.
-
-###### `options.main`
-
-Path to the main script (`string?`).
-Resolved from `package.json`s `main` property (or `index.js`).
-Used to rewrite `require('./index.js')` to `require('some-name')`.
-
-###### `options.example`
-
-Path to the example script (`string?`).
-`remark-usage` checks for `docs/example.js`, `doc/example.js`,
-`examples/index.js`, `example/index.js`, and `example.js`.
-
 ###### `options.heading`
 
 Heading to look for (`string?`, default: `'usage'`).
 Wrapped in `new RegExp('^(' + value + ')$', 'i');`.
+
+###### `options.example`
+
+Path to the example script (`string?`).
+If given, resolved from [`file.cwd`][file-cwd].
+If not given, the following values are attempted and resolved from `file.cwd`:
+`'./example'`, `'./examples'`, `'./doc/example'`, `'./docs/example'`.
+The first that exists, is used.
+
+###### `options.name`
+
+Name of the module (`string?`, default: `pkg.name`, optional).
+Used to rewrite `require('.')` to `require('name')`.
+
+###### `options.main`
+
+Path to the main file (`string?`, default: `pkg.main` or `'.'`, optional).
+If given, resolved from [`file.cwd`][file-cwd].
+If inferred from `package.json`, resolved relating to that package root.
+Used to rewrite `require('.')` to `require('name')`.
 
 ## Contribute
 
@@ -192,6 +211,12 @@ abide by its terms.
 
 [remark]: https://github.com/remarkjs/remark
 
+[file-cwd]: https://github.com/vfile/vfile#vfilecwd
+
 [usage]: #usage
 
 [example-js]: example.js
+
+[example-md]: ./example/readme.md
+
+[example-js-2]: ./example/example.js

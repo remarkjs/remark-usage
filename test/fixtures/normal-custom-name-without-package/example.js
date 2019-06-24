@@ -1,5 +1,5 @@
 // Require `pi`:
-var pi = require('./index.js');
+var pi = require('.')
 
 // Logs:
-console.log('text', pi);
+console.log('text', pi)

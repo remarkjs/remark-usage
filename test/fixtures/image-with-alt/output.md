@@ -5,7 +5,7 @@
 Require `pi`:
 
 ```javascript
-var pi = require('pi');
+var pi = require('pi')
 ```
 
 Logs:

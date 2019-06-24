@@ -9,7 +9,6 @@ var negate = require('negate')
 var usage = require('..')
 
 var read = fs.readFileSync
-var exists = fs.existsSync
 
 test('usage()', function(t) {
   t.equal(typeof usage, 'function', 'should be a function')
@@ -24,40 +23,62 @@ test('usage()', function(t) {
 var root = path.join(__dirname, 'fixtures')
 var fixtures = fs.readdirSync(root).filter(negate(hidden))
 
+fs.renameSync('package.json', 'package.json.bak')
+
+test.onFinish(function() {
+  fs.renameSync('package.json.bak', 'package.json')
+})
+
 test('Fixtures', function(t) {
   fixtures.forEach(function(fixture) {
-    var filepath = root + '/' + fixture
-    var config = filepath + '/config.json'
-    var output = filepath + '/output.md'
-    var input
-    var result
-    var fail
+    t.test(fixture, function(st) {
+      var base = path.join(root, fixture)
+      var input = read(path.join(base, 'readme.md'))
+      var expected = ''
+      var config = {}
+      var file
 
-    config = exists(config) ? require(config) : {}
-    output = exists(output) ? read(output, 'utf-8') : ''
+      st.plan(1)
 
-    input = read(filepath + '/readme.md', 'utf-8')
+      try {
+        expected = String(read(path.join(base, 'output.md')))
+      } catch (error) {}
 
-    config.cwd = filepath
+      try {
+        config = JSON.parse(read(path.join(base, 'config.json')))
+      } catch (error) {}
 
-    fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
+      file = {contents: input, cwd: base}
 
-    try {
-      result = remark()
-        .use(usage, config)
-        .processSync(input)
-        .toString()
-
-      t.equal(result, output, 'should work on `' + fixture + '`')
-    } catch (error) {
-      if (!fail) {
-        throw error
+      if (!config.withoutFilePath) {
+        file.path = 'readme.md'
       }
 
-      fail = new RegExp(fail.replace(/-/, ' '), 'i')
+      remark()
+        .use(usage, config)
+        .process(file, onprocess)
 
-      t.equal(fail.test(error), true, 'should fail on `' + fixture + '`')
-    }
+      function onprocess(err, file) {
+        var fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
+        var errMessage = fail ? new RegExp(fail.replace(/-/g, ' '), 'i') : null
+
+        if (fail) {
+          if (err) {
+            if (errMessage.test(err)) {
+              st.pass('should fail')
+            } else {
+              st.error(err, 'should fail')
+            }
+          } else {
+            st.fail('should fail instead of work')
+          }
+        } else if (err) {
+          st.error(err, 'should work instead of fail')
+        } else {
+          st.equal(String(file), expected, 'should work')
+        }
+      }
+    })
   })
 
   t.end()

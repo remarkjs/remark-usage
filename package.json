@@ -24,14 +24,13 @@
     "index.js"
   ],
   "dependencies": {
-    "cept": "^1.0.0",
+    "@babel/core": "^7.0.0",
     "mdast-util-heading-range": "^2.0.0",
+    "nanoid": "^2.0.0",
     "remark-parse": "^6.0.0",
-    "require-uncached": "^2.0.0",
     "resolve-from": "^5.0.0",
-    "trim-trailing-lines": "^1.0.0",
-    "unified": "^7.0.0",
-    "unquote": "^1.1.0"
+    "trough": "^1.0.0",
+    "unified": "^7.0.0"
   },
   "devDependencies": {
     "is-hidden": "^1.0.0",
@@ -42,10 +41,13 @@
     "remark-cli": "^6.0.0",
     "remark-preset-wooorm": "^5.0.0",
     "tape": "^4.0.0",
+    "to-vfile": "^6.0.0",
     "xo": "^0.24.0"
   },
   "scripts": {
-    "format": "remark *.md -qfo && prettier --write *.js test/*.js && xo *.js test/*.js --fix",
+    "format:md": "remark . -qfo",
+    "format:js": "prettier --no-config --config ./package.json --write \"**/*.js\" && xo --fix",
+    "format": "npm run format:md && npm run format:js",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
     "test": "npm run format && npm run test-coverage"
@@ -67,17 +69,9 @@
   "xo": {
     "prettier": true,
     "esnext": false,
-    "rules": {
-      "no-unused-expressions": "off",
-      "no-unused-vars": "off",
-      "eol-last": "off",
-      "import/no-dynamic-require": "off",
-      "import/order": "off",
-      "unicorn/import-index": "off",
-      "ava/no-import-test-files": "off"
-    },
     "ignore": [
-      "example.js"
+      "example.js",
+      "test/fixtures"
     ]
   },
   "remarkConfig": {
@@ -87,7 +81,12 @@
         "remark-lint-fenced-code-flag",
         false
       ],
-      "./"
+      [
+        "./",
+        {
+          "heading": "use"
+        }
+      ]
     ]
   }
 }
