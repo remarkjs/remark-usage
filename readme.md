@@ -153,6 +153,13 @@ If given, resolved from [`file.cwd`][file-cwd].
 If inferred from `package.json`, resolved relating to that package root.
 Used to rewrite `require('.')` to `require('name')`.
 
+###### `options.experimentalModules`
+
+Pass [`--experimental-modules`][experimental-modules] when running the example
+in Node.
+This lets you use ECMAScript Modules if the current version of Node does support
+this flag, but *does not* support ES modules natively.
+
 ## Contribute
 
 See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
@@ -212,6 +219,8 @@ abide by its terms.
 [remark]: https://github.com/remarkjs/remark
 
 [file-cwd]: https://github.com/vfile/vfile#vfilecwd
+
+[experimental-modules]: https://nodejs.org/api/esm.html
 
 [usage]: #use
 
