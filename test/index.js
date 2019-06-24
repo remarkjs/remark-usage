@@ -23,6 +23,16 @@ test('usage()', function(t) {
 var root = path.join(__dirname, 'fixtures')
 var fixtures = fs.readdirSync(root).filter(negate(hidden))
 
+// Ignore es modules below Node 12.
+var version = parseInt(process.version.slice(1), 10)
+
+if (version < 12) {
+  fixtures = fixtures.filter(function(f) {
+    var prefix = 'es-module'
+    return f.slice(0, prefix.length) !== prefix
+  })
+}
+
 fs.renameSync('package.json', 'package.json.bak')
 
 test.onFinish(function() {
