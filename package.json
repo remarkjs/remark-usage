@@ -1,6 +1,6 @@
 {
   "name": "remark-usage",
-  "version": "6.1.4",
+  "version": "7.0.0",
   "description": "remark plugin to add a usage example to your readme",
   "license": "MIT",
   "keywords": [
