@@ -21,6 +21,7 @@
     "Nick Baugh <niftylettuce@gmail.com>"
   ],
   "files": [
+    "lib/",
     "index.js"
   ],
   "dependencies": {
