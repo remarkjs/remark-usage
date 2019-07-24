@@ -160,6 +160,12 @@ in Node.
 This lets you use ECMAScript Modules if the current version of Node does support
 this flag, but *does not* support ES modules natively.
 
+## Security
+
+Use of `remark-usage` is unsafe because `main` and `example` are executed.
+This could become dangerous if an attacker was able to inject code into those
+files or their dependencies.
+
 ## Contribute
 
 See [`contributing.md`][contributing] in [`remarkjs/.github`][health] for ways
