@@ -10,10 +10,10 @@ var usage = require('..')
 
 var read = fs.readFileSync
 
-test('usage()', function(t) {
+test('usage()', function (t) {
   t.equal(typeof usage, 'function', 'should be a function')
 
-  t.doesNotThrow(function() {
+  t.doesNotThrow(function () {
     usage.call(remark)
   }, 'should not throw if not passed options')
 
@@ -27,7 +27,7 @@ var fixtures = fs.readdirSync(root).filter(negate(hidden))
 var version = parseInt(process.version.slice(1), 10)
 
 if (version < 12) {
-  fixtures = fixtures.filter(function(f) {
+  fixtures = fixtures.filter(function (f) {
     var prefix = 'es-module'
     return f.slice(0, prefix.length) !== prefix
   })
@@ -35,13 +35,13 @@ if (version < 12) {
 
 fs.renameSync('package.json', 'package.json.bak')
 
-test.onFinish(function() {
+test.onFinish(function () {
   fs.renameSync('package.json.bak', 'package.json')
 })
 
-test('Fixtures', function(t) {
-  fixtures.forEach(function(fixture) {
-    t.test(fixture, function(st) {
+test('Fixtures', function (t) {
+  fixtures.forEach(function (fixture) {
+    t.test(fixture, function (st) {
       var base = path.join(root, fixture)
       var input = read(path.join(base, 'readme.md'))
       var expected = ''
@@ -64,9 +64,7 @@ test('Fixtures', function(t) {
         file.path = 'readme.md'
       }
 
-      remark()
-        .use(usage, config)
-        .process(file, onprocess)
+      remark().use(usage, config).process(file, onprocess)
 
       function onprocess(err, file) {
         var fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
