@@ -8,8 +8,7 @@ var exampleJs = readFile(join('example', 'example.js'), 'utf8')
 var exampleMd = readFile(join('example', 'readme.md'), 'utf8')
 
 // remark-usage-ignore-next - Use async/await so it looks nicer.
-;(async function (){
-
+;(async function () {
 // Say we are making a module that exports just enough Pi (3.14159).
 // We’re documenting it with a readme file, [`example/readme.md`][example-md]:
 console.log('markdown', exampleMd)
@@ -25,12 +24,10 @@ var usage = require('.')
 
 var file = vfile.readSync({path: 'readme.md', cwd: 'example'})
 
-var file = await remark()
-  .use(usage)
-  .process(file)
+var file = await remark().use(usage).process(file)
 
 // Now, printing `file` (the newly generated readme) yields:
 console.log('markdown', String(file))
 
 // remark-usage-ignore-next
-}())
+})()

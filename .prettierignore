@@ -1,3 +1,6 @@
 coverage/
 example.js
 test/fixtures/fail-could-not-parse-package/index.js
+test/fixtures/fail-could-not-parse-example/example.js
+*.json
+*.md

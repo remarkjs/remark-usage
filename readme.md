@@ -58,9 +58,7 @@ var usage = require('remark-usage')
 
 var file = vfile.readSync({path: 'readme.md', cwd: 'example'})
 
-var file = await remark()
-  .use(usage)
-  .process(file)
+var file = await remark().use(usage).process(file)
 ```
 
 Now, printing `file` (the newly generated readme) yields:
