@@ -43,8 +43,8 @@
     "negate": "^1.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
-    "remark": "^12.0.0",
-    "remark-cli": "^8.0.0",
+    "remark": "^13.0.0-alpha.0",
+    "remark-cli": "^9.0.0-alpha.0",
     "remark-preset-wooorm": "^7.0.0",
     "tape": "^5.0.0",
     "to-vfile": "^6.0.0",
@@ -86,18 +86,6 @@
     ]
   },
   "remarkConfig": {
-    "plugins": [
-      "preset-wooorm",
-      [
-        "remark-lint-fenced-code-flag",
-        false
-      ],
-      [
-        "./",
-        {
-          "heading": "use"
-        }
-      ]
-    ]
+    "plugins": []
   }
 }

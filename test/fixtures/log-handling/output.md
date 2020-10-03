@@ -12,16 +12,14 @@ Log an object:
 
     {}
 
-Log nothing, _twice_:
+Log nothing, *twice*:
 
 Another comment.
 
 ```
-
 ```
 
 ```
-
 ```
 
 A commented log: `console.log()`.
