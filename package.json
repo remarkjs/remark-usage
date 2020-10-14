@@ -87,6 +87,8 @@
     ]
   },
   "remarkConfig": {
-    "plugins": []
+    "plugins": [
+      "preset-wooorm"
+    ]
   }
 }
