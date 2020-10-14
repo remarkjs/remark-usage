@@ -33,10 +33,11 @@
     "@babel/core": "^7.0.0",
     "mdast-util-heading-range": "^2.0.0",
     "nanoid": "^3.0.0",
-    "remark-parse": "^8.0.0",
+    "remark-parse": "^9.0.0",
     "resolve-from": "^5.0.0",
     "trough": "^1.0.0",
-    "unified": "^9.0.0"
+    "unified": "^9.0.0",
+    "unist-util-remove-position": "^3.0.0"
   },
   "devDependencies": {
     "is-hidden": "^1.0.0",
