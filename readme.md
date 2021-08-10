@@ -142,7 +142,9 @@ Wrapped in `new RegExp('^(' + value + ')$', 'i');`.
 Path to the example script (`string?`).
 If given, resolved from [`file.cwd`][file-cwd].
 If not given, the following values are attempted and resolved from `file.cwd`:
-`'./example'`, `'./examples'`, `'./doc/example'`, `'./docs/example'`.
+`'./example.js'`, `'./example/index.js'`, `'./examples.js'`,
+`'./examples/index.js'`, `'./doc/example.js'`, `'./doc/example/index.js'`,
+`'./docs/example.js'`, `'./docs/example/index.js'`.
 The first that exists, is used.
 
 ###### `options.name`

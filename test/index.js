@@ -1,3 +1,8 @@
+/**
+ * @typedef {import('vfile').VFileCompatible} VFileCompatible
+ * @typedef {import('../index.js').Options} Options
+ */
+
 import fs from 'fs'
 import path from 'path'
 import test from 'tape'
@@ -44,6 +49,7 @@ test('Fixtures', async (t) => {
     const base = path.join(root, fixture)
     const input = fs.readFileSync(path.join(base, 'readme.md'))
     let expected = ''
+    /** @type {Options & {withoutFilePath?: boolean}} */
     let config = {}
 
     try {
@@ -51,9 +57,12 @@ test('Fixtures', async (t) => {
     } catch {}
 
     try {
-      config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
+      config = JSON.parse(
+        String(fs.readFileSync(path.join(base, 'config.json')))
+      )
     } catch {}
 
+    /** @type {VFileCompatible} */
     const file = {value: input, cwd: base}
 
     if (!config.withoutFilePath) {
@@ -61,9 +70,6 @@ test('Fixtures', async (t) => {
     }
 
     const fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
-    const errorMessage = fail
-      ? new RegExp(fail.replace(/-/g, ' '), 'i')
-      : undefined
 
     try {
       const actual = await remark().use(remarkUsage, config).process(file)
@@ -75,6 +81,8 @@ test('Fixtures', async (t) => {
       }
     } catch (error) {
       if (fail) {
+        const errorMessage = new RegExp(fail.replace(/-/g, ' '), 'i')
+
         if (errorMessage.test(error)) {
           t.pass(fixture + ': should fail')
         } else {
