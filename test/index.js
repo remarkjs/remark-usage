@@ -19,6 +19,23 @@ test('remarkUsage', function (t) {
 var root = path.join('test', 'fixtures')
 var fixtures = fs.readdirSync(root).filter(negate(isHidden))
 
+fs.writeFileSync(
+  path.join(root, 'fail-could-not-parse-example', 'example.js'),
+  "'"
+)
+
+fs.writeFileSync(
+  path.join(root, 'fail-could-not-parse-package', 'package.json'),
+  '{'
+)
+fs.renameSync('package.json', 'package.json.bak')
+
+test.onFinish(() => {
+  fs.unlinkSync(path.join(root, 'fail-could-not-parse-example', 'example.js'))
+  fs.unlinkSync(path.join(root, 'fail-could-not-parse-package', 'package.json'))
+  fs.renameSync('package.json.bak', 'package.json')
+})
+
 // Ignore es modules below Node 12.
 var version = parseInt(process.version.slice(1), 10)
 
@@ -28,12 +45,6 @@ if (version < 12) {
     return f.slice(0, prefix.length) !== prefix
   })
 }
-
-fs.renameSync('package.json', 'package.json.bak')
-
-test.onFinish(function () {
-  fs.renameSync('package.json.bak', 'package.json')
-})
 
 test('Fixtures', function (t) {
   fixtures.forEach(function (fixture) {
