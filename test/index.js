@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import test from 'tape'
-import remark from 'remark'
-import hidden from 'is-hidden'
+import {remark} from 'remark'
+import {isHidden} from 'is-hidden'
 import negate from 'negate'
 import remarkUsage from '../index.js'
 
@@ -17,7 +17,7 @@ test('remarkUsage', function (t) {
 })
 
 var root = path.join('test', 'fixtures')
-var fixtures = fs.readdirSync(root).filter(negate(hidden))
+var fixtures = fs.readdirSync(root).filter(negate(isHidden))
 
 // Ignore es modules below Node 12.
 var version = parseInt(process.version.slice(1), 10)
@@ -54,7 +54,7 @@ test('Fixtures', function (t) {
         config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
       } catch (error) {}
 
-      file = {contents: input, cwd: base}
+      file = {value: input, cwd: base}
 
       if (!config.withoutFilePath) {
         file.path = 'readme.md'
