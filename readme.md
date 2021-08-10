@@ -26,11 +26,11 @@ npm install remark-usage
 
 ## Use
 
-> This section is rendered by this module from [`example.js`][example-js].
+> This section is rendered by this module from [`example.js`](example.js).
 > Turtles all the way down.  🐢🐢🐢
 
 Say we are making a module that exports just enough Pi (3.14159).
-We’re documenting it with a readme file, [`example/readme.md`][example-md]:
+We’re documenting it with a readme file, [`example/readme.md`](./example/readme.md):
 
 ```markdown
 # PI
@@ -44,11 +44,11 @@ More than enough 🍰
 MIT
 ```
 
-…and an example script to document it [`example/example.js`][example-js-2]:
+…and an example script to document it [`example/example.js`](./example/example.js):
 
 ```js
 // Load dependencies:
-var pi = require('.')
+import {pi} from './index.js'
 
 // Logging `pi` yields:
 console.log('txt', pi)
@@ -57,17 +57,16 @@ console.log('txt', pi)
 …If we use `remark-usage`, we can generate the `Usage` section
 
 ```javascript
-var path = require('path')
-var vfile = require('to-vfile')
-var remark = require('remark')
-var usage = require('remark-usage')
+import {readSync} from 'to-vfile'
+import {remark} from 'remark'
+import remarkUsage from 'remark-usage'
 
-var file = vfile.readSync({path: 'readme.md', cwd: 'example'})
+const file = readSync({path: 'readme.md', cwd: 'example'})
 
-var file = await remark().use(usage).process(file)
+const result = await remark().use(remarkUsage).process(file)
 ```
 
-Now, printing `file` (the newly generated readme) yields:
+Now, printing `result` (the newly generated readme) yields:
 
 ````markdown
 # PI
@@ -79,7 +78,7 @@ More than enough 🍰
 Load dependencies:
 
 ```javascript
-var pi = require('pi')
+import {pi} from 'pi'
 ```
 
 Logging `pi` yields:
@@ -94,8 +93,6 @@ MIT
 ````
 
 ## API
-
-<!--lint enable code-block-style-->
 
 ### `remark().use(usage[, options])`
 
@@ -120,7 +117,7 @@ You can ignore lines like so:
 
 ```js
 // remark-usage-ignore-next
-var two = sum(1, 1)
+const two = sum(1, 1)
 
 // remark-usage-ignore-next 3
 function sum(a, b) {
@@ -228,7 +225,3 @@ abide by its terms.
 [usage]: #use
 
 [example-js]: example.js
-
-[example-md]: ./example/readme.md
-
-[example-js-2]: ./example/example.js

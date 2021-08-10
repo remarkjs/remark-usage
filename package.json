@@ -96,7 +96,13 @@
   },
   "remarkConfig": {
     "plugins": [
-      "preset-wooorm"
+      "preset-wooorm",
+      [
+        "./index.js",
+        {
+          "heading": "use"
+        }
+      ]
     ]
   },
   "typeCoverage": {

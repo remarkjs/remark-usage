@@ -1,5 +1,5 @@
 // Load dependencies:
-const pi = require('.')
+import {pi} from './index.js'
 
 // Logging `pi` yields:
 console.log('txt', pi)
