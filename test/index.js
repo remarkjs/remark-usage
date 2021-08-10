@@ -6,7 +6,7 @@ import {isHidden} from 'is-hidden'
 import remarkUsage from '../index.js'
 
 const root = path.join('test', 'fixtures')
-let fixtures = fs.readdirSync(root)
+const fixtures = fs.readdirSync(root)
 
 fs.writeFileSync(
   path.join(root, 'fail-could-not-parse-example', 'example.js'),
@@ -32,16 +32,6 @@ test('remarkUsage', (t) => {
 
   t.end()
 })
-
-// Ignore es modules below Node 12.
-const version = Number.parseInt(process.version.slice(1), 10)
-
-if (version < 12) {
-  fixtures = fixtures.filter((f) => {
-    const prefix = 'es-module'
-    return f.slice(0, prefix.length) !== prefix
-  })
-}
 
 test('Fixtures', async (t) => {
   let index = -1
