@@ -1,5 +1,5 @@
 // Load dependencies:
-var pi = require('.')
+const pi = require('.')
 
 // Logging `pi` yields:
 console.log('txt', pi)
