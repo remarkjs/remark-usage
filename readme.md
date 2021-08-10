@@ -18,6 +18,9 @@ No change is needed: it works exactly the same now as it did before!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -94,7 +97,10 @@ MIT
 
 ## API
 
-### `remark().use(usage[, options])`
+This package exports no identifiers.
+The default export is `remarkUsage`.
+
+### `unified().use(remarkUsage[, options])`
 
 Add `example.js` to the `Usage` section in a readme.
 
