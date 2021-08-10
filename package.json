@@ -25,6 +25,9 @@
     "Ben Briggs <beneb.info@gmail.com>",
     "Nick Baugh <niftylettuce@gmail.com>"
   ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
   "files": [
     "lib/",
     "index.js"

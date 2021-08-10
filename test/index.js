@@ -1,26 +1,22 @@
-'use strict'
+import fs from 'fs'
+import path from 'path'
+import test from 'tape'
+import remark from 'remark'
+import hidden from 'is-hidden'
+import negate from 'negate'
+import remarkUsage from '../index.js'
 
-var fs = require('fs')
-var path = require('path')
-var test = require('tape')
-var remark = require('remark')
-var hidden = require('is-hidden')
-var negate = require('negate')
-var usage = require('..')
-
-var read = fs.readFileSync
-
-test('usage()', function (t) {
-  t.equal(typeof usage, 'function', 'should be a function')
+test('remarkUsage', function (t) {
+  t.equal(typeof remarkUsage, 'function', 'should be a function')
 
   t.doesNotThrow(function () {
-    usage.call(remark)
+    remarkUsage.call(remark)
   }, 'should not throw if not passed options')
 
   t.end()
 })
 
-var root = path.join(__dirname, 'fixtures')
+var root = path.join('test', 'fixtures')
 var fixtures = fs.readdirSync(root).filter(negate(hidden))
 
 // Ignore es modules below Node 12.
@@ -43,7 +39,7 @@ test('Fixtures', function (t) {
   fixtures.forEach(function (fixture) {
     t.test(fixture, function (st) {
       var base = path.join(root, fixture)
-      var input = read(path.join(base, 'readme.md'))
+      var input = fs.readFileSync(path.join(base, 'readme.md'))
       var expected = ''
       var config = {}
       var file
@@ -51,11 +47,11 @@ test('Fixtures', function (t) {
       st.plan(1)
 
       try {
-        expected = String(read(path.join(base, 'output.md')))
+        expected = String(fs.readFileSync(path.join(base, 'output.md')))
       } catch (error) {}
 
       try {
-        config = JSON.parse(read(path.join(base, 'config.json')))
+        config = JSON.parse(fs.readFileSync(path.join(base, 'config.json')))
       } catch (error) {}
 
       file = {contents: input, cwd: base}
@@ -64,7 +60,7 @@ test('Fixtures', function (t) {
         file.path = 'readme.md'
       }
 
-      remark().use(usage, config).process(file, onprocess)
+      remark().use(remarkUsage, config).process(file, onprocess)
 
       function onprocess(err, file) {
         var fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
