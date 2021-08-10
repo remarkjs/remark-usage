@@ -72,6 +72,14 @@
     "ignores": [
       "example.js",
       "test/fixtures/**/*.js"
+    ],
+    "overrides": [
+      {
+        "files": "test/**/*.js",
+        "rules": {
+          "no-await-in-loop": "off"
+        }
+      }
     ]
   },
   "remarkConfig": {
