@@ -27,7 +27,7 @@
 
 ## What is this?
 
-This package is a [unified][] ([remark][]) plugin to a Usage section to
+This package is a [unified][] ([remark][]) plugin to add a Usage section to
 markdown.
 
 unified is an AST (abstract syntax tree) based transform project.
