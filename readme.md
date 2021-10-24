@@ -10,18 +10,42 @@
 
 [**remark**][remark] plugin to add a [usage][] example to a readme.
 
-## Note!
+## Contents
 
-This plugin is ready for the new parser in remark
-([`remarkjs/remark#536`](https://github.com/remarkjs/remark/pull/536)).
-No change is needed: it works exactly the same now as it did before!
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(remarkUsage[, options])`](#unifieduseremarkusage-options)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([remark][]) plugin to a Usage section to
+markdown.
+
+unified is an AST (abstract syntax tree) based transform project.
+**remark** is everything unified that relates to markdown.
+The layer under remark is called mdast, which is only concerned with syntax
+trees.
+Another layer underneath is micromark, which is only concerned with parsing.
+This package is a small wrapper to integrate all of these.
+
+## When should I use this?
+
+You can use this on readmes of npm packages to keep the docs in sync with the
+project through an actual code sample.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+In Node.js (12.20+, 14.14+, 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-usage
@@ -104,20 +128,18 @@ The default export is `remarkUsage`.
 
 Add `example.js` to the `Usage` section in a readme.
 
-Removes the current content between the heading containing the text “usage”, and
-the next heading of the same (or higher) depth, and replaces it with the
+Replaces the current content between the heading containing the text “usage”
+(configurable) and the next heading of the same (or higher) rank with the
 example.
 
-The example is run in Node.
-Line comments are parsed as Markdown.
+The example is run in Node.js.
+Make sure no side effects occur when running `example.js`.
+Line comments are parsed as markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
 values (optionally with a language flag).
 
-It’s easiest to check out and compare [`example.js`][example-js] with the above
-[Usage][] section.
-
-*   Operate this from an npm package
-*   Make sure no side effects occur when running `example.js`
+It may help to compare [`example.js`][example-js] with the above [use][usage]
+section.
 
 You can ignore lines like so:
 
@@ -142,7 +164,7 @@ Wrapped in `new RegExp('^(' + value + ')$', 'i');`.
 
 ###### `options.example`
 
-Path to the example script (`string?`).
+Path to the example (`string?`).
 If given, resolved from [`file.cwd`][file-cwd].
 If not given, the following values are attempted and resolved from `file.cwd`:
 `'./example.js'`, `'./example/index.js'`, `'./examples.js'`,
@@ -162,11 +184,35 @@ If given, resolved from [`file.cwd`][file-cwd].
 If inferred from `package.json`, resolved relating to that package root.
 Used to rewrite `require('.')` to `require('name')`.
 
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports an `Options` type, which specifies the interface of the accepted
+options.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+This plugin works with unified 6+ and remark 13+.
+
 ## Security
 
 Use of `remark-usage` is unsafe because `main` and `example` are executed.
 This could become dangerous if an attacker was able to inject code into those
 files or their dependencies.
+
+## Related
+
+*   [`remark-toc`](https://github.com/remarkjs/remark-toc)
+    — add a table of contents (TOC)
+*   [`remark-license`](https://github.com/remarkjs/remark-license)
+    — add a license section
+*   [`remark-contributors`](https://github.com/remarkjs/remark-contributors)
+    — add a contributors section
 
 ## Contribute
 
@@ -224,7 +270,11 @@ abide by its terms.
 
 [author]: https://wooorm.com
 
+[unified]: https://github.com/unifiedjs/unified
+
 [remark]: https://github.com/remarkjs/remark
+
+[typescript]: https://www.typescriptlang.org
 
 [file-cwd]: https://github.com/vfile/vfile#vfilecwd
 
