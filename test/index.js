@@ -3,8 +3,8 @@
  * @typedef {import('../index.js').Options} Options
  */
 
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import test from 'tape'
 import {remark} from 'remark'
 import {isHidden} from 'is-hidden'
@@ -80,16 +80,18 @@ test('Fixtures', async (t) => {
         t.equal(String(actual), expected, fixture + ': should work')
       }
     } catch (error) {
+      const exception = /** @type {Error} */ (error)
+
       if (fail) {
         const errorMessage = new RegExp(fail.replace(/-/g, ' '), 'i')
 
-        if (errorMessage.test(error)) {
+        if (errorMessage.test(String(exception))) {
           t.pass(fixture + ': should fail')
         } else {
-          t.error(error, fixture + ': should fail')
+          t.error(exception, fixture + ': should fail')
         }
       } else {
-        t.error(error, fixture + ': should work instead of fail')
+        t.error(exception, fixture + ': should work instead of fail')
       }
     }
   }
