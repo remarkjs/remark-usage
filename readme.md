@@ -30,12 +30,11 @@
 This package is a [unified][] ([remark][]) plugin to add a Usage section to
 markdown.
 
-unified is an AST (abstract syntax tree) based transform project.
-**remark** is everything unified that relates to markdown.
-The layer under remark is called mdast, which is only concerned with syntax
-trees.
-Another layer underneath is micromark, which is only concerned with parsing.
-This package is a small wrapper to integrate all of these.
+**unified** is a project that transforms content with abstract syntax trees
+(ASTs).
+**remark** adds support for markdown to unified.
+**mdast** is the markdown AST that remark uses.
+This is a remark plugin that transforms mdast.
 
 ## When should I use this?
 
@@ -45,7 +44,7 @@ project through an actual code sample.
 ## Install
 
 This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-In Node.js (12.20+, 14.14+, 16.0+), install with [npm][]:
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install remark-usage
@@ -197,7 +196,7 @@ versions of Node.js.
 As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
-This plugin works with remark 12+ and `remark-cli` 8+.
+This plugin works with remark version 12+ and `remark-cli` version 8+.
 
 ## Security
 
