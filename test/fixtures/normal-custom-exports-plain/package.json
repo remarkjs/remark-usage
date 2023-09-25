@@ -1,0 +1,5 @@
+{
+  "name": "pi",
+  "type": "module",
+  "exports": "./pi.js"
+}
