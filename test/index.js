@@ -3,90 +3,86 @@
  * @typedef {import('../index.js').Options} Options
  */
 
-import fs from 'node:fs'
-import path from 'node:path'
-import test from 'tape'
+import assert from 'node:assert/strict'
+import fs from 'node:fs/promises'
+import test from 'node:test'
+import {fileURLToPath} from 'node:url'
 import {remark} from 'remark'
-import {isHidden} from 'is-hidden'
 import remarkUsage from '../index.js'
 
-const root = path.join('test', 'fixtures')
-const fixtures = fs.readdirSync(root)
+test('fixtures', async function (t) {
+  // Prepapre.
+  const root = new URL('fixtures/', import.meta.url)
+  const packageUrl = new URL('../package.json', import.meta.url)
+  const packageBackUrl = new URL('../package.json.bak', import.meta.url)
+  const brokenPackageUrl = new URL(
+    'fail-could-not-parse-package/package.json',
+    root
+  )
+  const brokenExampleUrl = new URL(
+    'fail-could-not-parse-example/example.js',
+    root
+  )
 
-fs.writeFileSync(
-  path.join(root, 'fail-could-not-parse-example', 'example.js'),
-  "'"
-)
+  await fs.writeFile(brokenExampleUrl, '"\n')
+  await fs.writeFile(brokenPackageUrl, '{\n')
+  await fs.rename(packageUrl, packageBackUrl)
 
-fs.writeFileSync(
-  path.join(root, 'fail-could-not-parse-package', 'package.json'),
-  '{'
-)
-fs.renameSync('package.json', 'package.json.bak')
-
-test.onFinish(() => {
-  fs.unlinkSync(path.join(root, 'fail-could-not-parse-example', 'example.js'))
-  fs.unlinkSync(path.join(root, 'fail-could-not-parse-package', 'package.json'))
-  fs.renameSync('package.json.bak', 'package.json')
-})
-
-test('Fixtures', async (t) => {
+  // Test.
+  const fixtures = await fs.readdir(root)
   let index = -1
 
   while (++index < fixtures.length) {
-    const fixture = fixtures[index]
+    const folder = fixtures[index]
 
-    if (isHidden(fixture)) continue
+    if (folder.startsWith('.')) continue
 
-    const base = path.join(root, fixture)
-    const input = fs.readFileSync(path.join(base, 'readme.md'))
-    let expected = ''
-    /** @type {Options & {withoutFilePath?: boolean}} */
-    let config = {}
+    await t.test(folder, async function () {
+      const folderUrl = new URL(folder + '/', root)
+      const inputUrl = new URL('readme.md', folderUrl)
+      const outputUrl = new URL('output.md', folderUrl)
+      const configUrl = new URL('config.json', folderUrl)
 
-    try {
-      expected = String(fs.readFileSync(path.join(base, 'output.md')))
-    } catch {}
+      /** @type {Options & {withoutFilePath?: boolean} | undefined} */
+      let config
+      /** @type {string} */
+      let output
 
-    try {
-      config = JSON.parse(
-        String(fs.readFileSync(path.join(base, 'config.json')))
-      )
-    } catch {}
+      try {
+        config = JSON.parse(String(await fs.readFile(configUrl)))
+      } catch {}
 
-    /** @type {VFileCompatible} */
-    const file = {value: input, cwd: base}
-
-    if (!config.withoutFilePath) {
-      file.path = 'readme.md'
-    }
-
-    const fail = fixture.indexOf('fail-') === 0 ? fixture.slice(5) : ''
-
-    try {
-      const actual = await remark().use(remarkUsage, config).process(file)
-
-      if (fail) {
-        t.fail(fixture + ': should fail instead of work')
-      } else {
-        t.equal(String(actual), expected, fixture + ': should work')
+      try {
+        output = String(await fs.readFile(outputUrl))
+      } catch {
+        output = ''
       }
-    } catch (error) {
-      const exception = /** @type {Error} */ (error)
 
-      if (fail) {
-        const errorMessage = new RegExp(fail.replace(/-/g, ' '), 'i')
+      try {
+        const file = await remark()
+          // @ts-expect-error: to do.
+          .use(remarkUsage, config)
+          .process({
+            value: await fs.readFile(inputUrl),
+            cwd: fileURLToPath(folderUrl),
+            path: config && config.withoutFilePath ? undefined : 'readme.md'
+          })
 
-        if (errorMessage.test(String(exception))) {
-          t.pass(fixture + ': should fail')
-        } else {
-          t.error(exception, fixture + ': should fail')
+        assert.equal(String(file), output)
+      } catch (error) {
+        if (folder.indexOf('fail-') !== 0) {
+          throw error
         }
-      } else {
-        t.error(exception, fixture + ': should work instead of fail')
+
+        const message = folder.slice(5).replace(/-/g, ' ')
+        // .replace(/`/g, '')
+        assert.match(String(error), new RegExp(message, 'i'))
       }
-    }
+    })
   }
 
-  t.end()
+  // Clean.
+  await fs.unlink(brokenExampleUrl)
+  await fs.unlink(brokenPackageUrl)
+  await fs.rename(packageBackUrl, packageUrl)
 })
