@@ -39,7 +39,7 @@
     "import-meta-resolve": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-heading-range": "^4.0.0",
-    "nanoid": "^5.0.0",
+    "nanoid": "^4.0.0",
     "unist-util-remove-position": "^5.0.0",
     "vfile": "^6.0.0",
     "vfile-find-up": "^7.0.0",
