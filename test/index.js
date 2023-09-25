@@ -32,13 +32,10 @@ test('fixtures', async function (t) {
   const packageUrl = new URL('../package.json', import.meta.url)
   const packageBackUrl = new URL('../package.json.bak', import.meta.url)
   const brokenPackageUrl = new URL(
-    'fail-could-not-parse-package/package.json',
+    'fail-cannot-parse-package/package.json',
     root
   )
-  const brokenExampleUrl = new URL(
-    'fail-could-not-parse-example/example.js',
-    root
-  )
+  const brokenExampleUrl = new URL('fail-cannot-parse-example/example.js', root)
 
   await fs.writeFile(brokenExampleUrl, '"\n')
   await fs.writeFile(brokenPackageUrl, '{\n')
@@ -90,8 +87,7 @@ test('fixtures', async function (t) {
         }
 
         const message = folder.slice(5).replace(/-/g, ' ')
-        // .replace(/`/g, '')
-        assert.match(String(error), new RegExp(message, 'i'))
+        assert.match(String(error).replace(/`/g, ''), new RegExp(message, 'i'))
       }
     })
   }

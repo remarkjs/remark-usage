@@ -42,7 +42,8 @@
     "nanoid": "^5.0.0",
     "unist-util-remove-position": "^5.0.0",
     "vfile": "^6.0.0",
-    "vfile-find-up": "^7.0.0"
+    "vfile-find-up": "^7.0.0",
+    "vfile-message": "^4.0.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.0.0",
