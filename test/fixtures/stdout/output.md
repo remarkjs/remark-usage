@@ -6,7 +6,9 @@
 process.stdout.write('foo')
 ```
 
-    bar
+```
+bar
+```
 
 ```javascript
 process.stdout.write('baz')

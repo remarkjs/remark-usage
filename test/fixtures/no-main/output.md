@@ -11,4 +11,6 @@ var result = a + b
 
 Yields:
 
-    3
+```
+3
+```

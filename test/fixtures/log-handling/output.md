@@ -10,7 +10,9 @@ var pi = require('pi')
 
 Log an object:
 
-    {}
+```
+{}
+```
 
 Log nothing, *twice*:
 
