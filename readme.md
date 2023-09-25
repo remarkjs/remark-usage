@@ -83,16 +83,16 @@ console.log('txt', pi)
 …If we use `remark-usage`, we can generate the `Usage` section
 
 ```javascript
-import {readSync} from 'to-vfile'
 import {remark} from 'remark'
 import remarkUsage from 'remark-usage'
+import {read} from 'to-vfile'
 
-const file = readSync({path: 'readme.md', cwd: 'example'})
+const file = await read({path: 'readme.md', cwd: 'example'})
 
-const result = await remark().use(remarkUsage).process(file)
+await remark().use(remarkUsage).process(file)
 ```
 
-Now, printing `result` (the newly generated readme) yields:
+Now, printing `file` (the newly generated readme) yields:
 
 ````markdown
 # PI

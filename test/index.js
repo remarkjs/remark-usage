@@ -1,6 +1,14 @@
 /**
- * @typedef {import('vfile').VFileCompatible} VFileCompatible
  * @typedef {import('../index.js').Options} Options
+ */
+
+/**
+ * @typedef {ExtraOptionsFields & Options} Config
+ *
+ * @typedef ExtraOptionsFields
+ *   Extra fields.
+ * @property {boolean | null | undefined} [withoutFilePath]
+ *   Do not add a path to the file (default: `false`).
  */
 
 import assert from 'node:assert/strict'
@@ -9,6 +17,14 @@ import test from 'node:test'
 import {fileURLToPath} from 'node:url'
 import {remark} from 'remark'
 import remarkUsage from '../index.js'
+
+test('remark-usage', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+      'default'
+    ])
+  })
+})
 
 test('fixtures', async function (t) {
   // Prepapre.
@@ -43,7 +59,7 @@ test('fixtures', async function (t) {
       const outputUrl = new URL('output.md', folderUrl)
       const configUrl = new URL('config.json', folderUrl)
 
-      /** @type {Options & {withoutFilePath?: boolean} | undefined} */
+      /** @type {Config | undefined} */
       let config
       /** @type {string} */
       let output
@@ -60,12 +76,11 @@ test('fixtures', async function (t) {
 
       try {
         const file = await remark()
-          // @ts-expect-error: to do.
           .use(remarkUsage, config)
           .process({
-            value: await fs.readFile(inputUrl),
             cwd: fileURLToPath(folderUrl),
-            path: config && config.withoutFilePath ? undefined : 'readme.md'
+            path: config && config.withoutFilePath ? undefined : 'readme.md',
+            value: await fs.readFile(inputUrl)
           })
 
         assert.equal(String(file), output)
