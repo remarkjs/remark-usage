@@ -4,14 +4,14 @@
   "description": "remark plugin to add a usage example to your readme",
   "license": "MIT",
   "keywords": [
-    "unified",
+    "markdown",
+    "mdast",
+    "plain",
+    "plugin",
     "remark",
     "remark-plugin",
-    "plugin",
-    "mdast",
-    "markdown",
-    "plain",
-    "text"
+    "text",
+    "unified"
   ],
   "repository": "remarkjs/remark-usage",
   "bugs": "https://github.com/remarkjs/remark-usage/issues",
@@ -65,41 +65,23 @@
   },
   "scripts": {
     "build": "tsc --build --clean && tsc --build && type-coverage",
-    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
+    "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
+    "prepack": "npm run build && npm run format",
+    "test": "npm run build && npm run format && npm run test-coverage",
     "test-api": "node --conditions development test/index.js",
-    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov npm run test-api",
-    "test": "npm run build && npm run format && npm run test-coverage"
+    "test-coverage": "c8 --100 --reporter lcov npm run test-api"
   },
   "prettier": {
-    "tabWidth": 2,
-    "useTabs": false,
-    "singleQuote": true,
     "bracketSpacing": false,
+    "singleQuote": true,
     "semi": false,
-    "trailingComma": "none"
-  },
-  "xo": {
-    "prettier": true,
-    "ignores": [
-      "example.js",
-      "test/fixtures/**/*.js"
-    ],
-    "overrides": [
-      {
-        "files": "test/**/*.js",
-        "rules": {
-          "no-await-in-loop": "off"
-        }
-      }
-    ],
-    "rules": {
-      "unicorn/prefer-at": "off",
-      "unicorn/prefer-string-replace-all": "off"
-    }
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
   },
   "remarkConfig": {
     "plugins": [
-      "preset-wooorm",
+      "remark-preset-wooorm",
       [
         "./index.js",
         {
@@ -111,7 +93,28 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true,
-    "ignoreCatch": true
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "ignores": [
+      "example.js",
+      "test/fixtures/**/*.js"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "no-await-in-loop": "off"
+        }
+      }
+    ],
+    "prettier": true,
+    "rules": {
+      "unicorn/prefer-at": "off",
+      "unicorn/prefer-string-replace-all": "off"
+    }
   }
 }
