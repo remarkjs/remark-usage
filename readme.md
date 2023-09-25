@@ -3,12 +3,11 @@
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
 [![Sponsors][sponsors-badge]][collective]
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**remark**][remark] plugin to add a [usage][] example to a readme.
+**[remark][]** plugin to add a [usage][section-use] example to a readme.
 
 ## Contents
 
@@ -18,6 +17,7 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(remarkUsage[, options])`](#unifieduseremarkusage-options)
+    *   [`Options`](#options)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -27,14 +27,8 @@
 
 ## What is this?
 
-This package is a [unified][] ([remark][]) plugin to add a Usage section to
+This package is a [unified][] ([remark][]) plugin to add a usage section to
 markdown.
-
-**unified** is a project that transforms content with abstract syntax trees
-(ASTs).
-**remark** adds support for markdown to unified.
-**mdast** is the markdown AST that remark uses.
-This is a remark plugin that transforms mdast.
 
 ## When should I use this?
 
@@ -43,8 +37,8 @@ project through an actual code sample.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+This package is [ESM only][esm].
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install remark-usage
@@ -80,7 +74,7 @@ import {pi} from './index.js'
 console.log('txt', pi)
 ```
 
-…If we use `remark-usage`, we can generate the `Usage` section
+…if we use `remark-usage`, we can generate the `Usage` section
 
 ```javascript
 import {remark} from 'remark'
@@ -92,7 +86,7 @@ const file = await read({path: 'readme.md', cwd: 'example'})
 await remark().use(remarkUsage).process(file)
 ```
 
-Now, printing `file` (the newly generated readme) yields:
+…then printing `file` (the newly generated readme) yields:
 
 ````markdown
 # PI
@@ -121,26 +115,23 @@ MIT
 ## API
 
 This package exports no identifiers.
-The default export is `remarkUsage`.
+The default export is [`remarkUsage`][api-remark-usage].
 
 ### `unified().use(remarkUsage[, options])`
 
-Add `example.js` to the `Usage` section in a readme.
+Add a usage example to a readme.
 
-Replaces the current content between the heading containing the text “usage”
-(configurable) and the next heading of the same (or higher) rank with the
-example.
+Looks for the first heading matching `options.heading` (case insensitive),
+removes everything between it and an equal or higher next heading, and replaces
+that with an example.
 
-The example is run in Node.js.
-Make sure no side effects occur when running `example.js`.
-Line comments are parsed as markdown.
+The example runs in Node.js (so no side effects!).
+Line comments (`//`) are turned into markdown.
 Calls to `console.log()` are exposed as code blocks, containing the logged
-values (optionally with a language flag).
+values, so `console.log(1 + 1)` becomes `2`.
+Use a string as the first argument to `log` to use as the language for the code.
 
-It may help to compare [`example.js`][example-js] with the above [use][usage]
-section.
-
-You can ignore lines like so:
+You can ignore lines with `remark-usage-ignore-next`:
 
 ```js
 // remark-usage-ignore-next
@@ -154,47 +145,53 @@ function sum(a, b) {
 
 …if no `skip` is given, 1 line is skipped.
 
-##### `options`
+###### Parameters
 
-###### `options.heading`
+*   `options` ([`Options`][api-options], optional)
+    — configuration
 
-Heading to look for (`string?`, default: `'usage'`).
-Wrapped in `new RegExp('^(' + value + ')$', 'i');`.
+###### Returns
 
-###### `options.example`
+Transform ([`Transformer`][unified-transformer]).
 
-Path to the example (`string?`).
-If given, resolved from [`file.cwd`][file-cwd].
-If not given, the following values are attempted and resolved from `file.cwd`:
-`'./example.js'`, `'./example/index.js'`, `'./examples.js'`,
-`'./examples/index.js'`, `'./doc/example.js'`, `'./doc/example/index.js'`,
-`'./docs/example.js'`, `'./docs/example/index.js'`.
-The first that exists, is used.
+### `Options`
 
-###### `options.name`
+Configuration (TypeScript type).
 
-Name of the module (`string?`, default: `pkg.name`, optional).
-Used to rewrite `require('.')` to `require('name')`.
+###### Fields
 
-###### `options.main`
-
-Path to the main file (`string?`, default: `pkg.main` or `'.'`, optional).
-If given, resolved from [`file.cwd`][file-cwd].
-If inferred from `package.json`, resolved relating to that package root.
-Used to rewrite `require('.')` to `require('name')`.
+*   `example` (`string`, optional)
+    — path to example file (optional);
+    resolved from `file.cwd`;
+    defaults to the first example that exists: `'example.js'`,
+    `'example/index.js'`, `'examples.js'`, `'examples/index.js'`,
+    `'doc/example.js'`, `'doc/example/index.js'`, `'docs/example.js'`,
+    `'docs/example/index.js'`
+*   `heading` (`string`, default: `'usage'`)
+    — heading to look for;
+    wrapped in `new RegExp('^(' + value + ')$', 'i');`
+*   `main` (`string`, default: `pkg.exports`, `pkg.main`, `'index.js'`)
+    — path to the file;
+    resolved from `file.cwd`;
+    used to rewrite `import x from './main.js'` to `import x from 'name'`
+*   `name` (`string`, default: `pkg.name`)
+    — name of the module;
+    used to rewrite `import x from './main.js'` to `import x from 'name'`
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports an `Options` type, which specifies the interface of the accepted
-options.
+It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `remark-usage@^10`,
+compatible with Node.js 12.
 
 This plugin works with remark version 12+ and `remark-cli` version 8+.
 
@@ -241,10 +238,6 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/remark-usage
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/remark-usage.svg
-
-[size]: https://bundlephobia.com/result?p=remark-usage
-
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
 [backers-badge]: https://opencollective.com/unified/backers/badge.svg
@@ -257,26 +250,30 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
 [health]: https://github.com/remarkjs/.github
 
-[contributing]: https://github.com/remarkjs/.github/blob/HEAD/contributing.md
+[contributing]: https://github.com/remarkjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/remarkjs/.github/blob/HEAD/support.md
+[support]: https://github.com/remarkjs/.github/blob/main/support.md
 
-[coc]: https://github.com/remarkjs/.github/blob/HEAD/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 
 [license]: license
 
 [author]: https://wooorm.com
 
-[unified]: https://github.com/unifiedjs/unified
-
 [remark]: https://github.com/remarkjs/remark
 
 [typescript]: https://www.typescriptlang.org
 
-[file-cwd]: https://github.com/vfile/vfile#vfilecwd
+[unified]: https://github.com/unifiedjs/unified
 
-[usage]: #use
+[unified-transformer]: https://github.com/unifiedjs/unified#transformer
 
-[example-js]: example.js
+[section-use]: #use
+
+[api-options]: #options
+
+[api-remark-usage]: #unifieduseremarkusage-options

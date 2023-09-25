@@ -13,7 +13,7 @@ console.log('markdown', exampleMd)
 // …and an example script to document it [`example/example.js`](./example/example.js):
 console.log('js', exampleJs)
 
-// …If we use `remark-usage`, we can generate the `Usage` section
+// …if we use `remark-usage`, we can generate the `Usage` section
 import {remark} from 'remark'
 import remarkUsage from './index.js'
 import {read} from 'to-vfile'
@@ -22,5 +22,5 @@ const file = await read({path: 'readme.md', cwd: 'example'})
 
 await remark().use(remarkUsage).process(file)
 
-// Now, printing `file` (the newly generated readme) yields:
+// …then printing `file` (the newly generated readme) yields:
 console.log('markdown', String(file))
