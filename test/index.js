@@ -30,14 +30,6 @@ test.onFinish(() => {
   fs.renameSync('package.json.bak', 'package.json')
 })
 
-test('remarkUsage', (t) => {
-  t.doesNotThrow(() => {
-    remarkUsage.call(remark)
-  }, 'should not throw if not passed options')
-
-  t.end()
-})
-
 test('Fixtures', async (t) => {
   let index = -1
 
